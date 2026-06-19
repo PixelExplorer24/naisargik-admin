@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnowarmartBD - এডমিন ও স্টোরফ্রন্ট</title>
+    <title>Naisargik - এডমিন প্যানেল</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -46,22 +46,20 @@
         .page-section { animation: fadeIn 0.3s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Mobile specific hidden elements for tables */
         @media (max-width: 768px) {
             .mobile-card-row { margin-bottom: 1rem; border-radius: 0.75rem; border: 1px solid #f3f4f6; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
         }
 
-        /* Public Page Specific Styles */
-        .product-card:hover .product-img { transform: scale(1.08); }
-        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 40; }
-        #section-public { background-color: #ecfdf5; /* emerald-50 */ }
+        /* Timeline Styles */
+        .timeline-scrollbar::-webkit-scrollbar { height: 4px; }
+        .timeline-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
     </style>
 </head>
 <body class="text-gray-800 h-screen overflow-hidden flex items-center justify-center relative">
 
     <div id="global-loader" class="fixed inset-0 bg-white z-[100] flex flex-col items-center justify-center transition-opacity duration-300">
-        <img src="" class="brand-logo hidden w-20 h-20 object-contain mb-4 animate-pulse" alt="Logo">
-        <div class="brand-initial w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center font-bold text-3xl shadow-lg mb-4 animate-bounce">A</div>
+        <img src="" class="brand-logo hidden w-auto max-w-[200px] h-20 object-contain mb-4 animate-pulse" alt="Logo">
+        <div class="brand-initial w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center font-bold text-3xl shadow-lg mb-4 animate-bounce">N</div>
         <div class="loader"></div>
         <p class="mt-4 text-primary font-medium">লোড হচ্ছে...</p>
     </div>
@@ -74,13 +72,26 @@
         <span id="toast-message" class="font-medium text-sm">সফলভাবে সম্পন্ন হয়েছে!</span>
     </div>
 
+    <!-- Custom Confirm Modal -->
+    <div id="custom-confirm-modal" class="fixed inset-0 bg-black/60 z-[120] hidden items-center justify-center backdrop-blur-sm p-4 transition-opacity">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center transform scale-95 transition-transform">
+            <div class="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <h3 class="text-lg font-bold text-gray-800 mb-2" id="confirm-modal-title">নিশ্চিত করুন</h3>
+            <p class="text-sm text-gray-500 mb-6" id="confirm-modal-desc">আপনি কি এই কাজটি করতে চান?</p>
+            <div class="flex gap-3 justify-center">
+                <button onclick="window.closeConfirmModal()" class="flex-1 px-4 py-2.5 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl font-bold transition-colors">না, বাতিল</button>
+                <button id="confirm-modal-btn" class="flex-1 px-4 py-2.5 bg-red-600 text-white hover:bg-red-700 rounded-xl font-bold transition-colors">হ্যাঁ, নিশ্চিত</button>
+            </div>
+        </div>
+    </div>
+
     <div id="login-view" class="hidden w-full max-w-md p-6">
         <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-emerald-100">
-            <div class="bg-primary p-6 text-center">
-                <img src="" class="brand-logo hidden w-16 h-16 mx-auto object-contain mb-3 bg-white p-1 rounded-xl shadow-lg" alt="Logo">
-                <div class="brand-initial w-16 h-16 bg-white text-primary rounded-full flex items-center justify-center font-bold text-3xl shadow-lg mx-auto mb-3">A</div>
-                <h2 class="text-2xl font-bold text-white tracking-tight">AnowarmartBD</h2>
-                <p class="text-emerald-100 text-sm mt-1">এডমিন প্যানেল</p>
+            <div class="bg-primary p-6 text-center flex flex-col items-center justify-center min-h-[160px]">
+                <img src="" class="brand-logo hidden w-auto max-w-[250px] h-20 mx-auto object-contain bg-white p-2 rounded-xl shadow-lg" alt="Logo">
+                <div class="brand-initial w-16 h-16 bg-white text-primary rounded-full flex items-center justify-center font-bold text-4xl shadow-lg mx-auto">N</div>
             </div>
             
             <div class="p-8">
@@ -89,15 +100,19 @@
                         ইমেইল বা পাসওয়ার্ড সঠিক নয়।
                     </div>
                     <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">ইমেইল এড্রেস</label>
-                        <input type="email" id="email" required placeholder="admin@anowarmartbd.com" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none">
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">ইমেইল/ ইউজার আইডি</label>
+                        <input type="email" id="email" required placeholder="admin@naisargik.com" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none">
                     </div>
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-700 mb-2">পাসওয়ার্ড</label>
                         <input type="password" id="password" required placeholder="••••••••" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none">
                     </div>
-                    <button type="submit" id="login-btn" class="w-full bg-primary hover:bg-emerald-800 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all flex items-center justify-center gap-2">
-                        <span>লগইন করুন</span>
+                    <button type="submit" id="login-btn" class="w-full bg-primary hover:bg-emerald-800 disabled:bg-emerald-600 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all flex items-center justify-center gap-2">
+                        <svg id="login-spinner" class="animate-spin hidden h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span id="login-text">লগইন করুন</span>
                     </button>
                 </form>
             </div>
@@ -108,10 +123,9 @@
         
         <!-- Desktop Sidebar -->
         <aside class="hidden md:flex w-64 bg-dark text-gray-300 flex-col transition-all duration-300 z-20 shadow-xl">
-            <div class="p-5 flex items-center gap-3 border-b border-gray-700 bg-gray-900">
-                <img src="" class="brand-logo hidden w-10 h-10 object-contain bg-white rounded-lg p-1" alt="Logo">
-                <div class="brand-initial w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold text-xl shadow-lg">A</div>
-                <span class="font-bold text-lg text-white leading-tight">Anowarmart<br><span class="text-secondary text-sm">Admin</span></span>
+            <div class="p-5 flex items-center justify-center border-b border-gray-700 bg-gray-900 min-h-[80px]">
+                <img src="" class="brand-logo hidden w-auto max-w-[200px] h-12 object-contain bg-white rounded-lg p-1" alt="Logo">
+                <div class="brand-initial w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold text-2xl shadow-lg">N</div>
             </div>
             
             <nav id="sidebar-nav" class="flex-1 p-4 space-y-2 overflow-y-auto">
@@ -131,19 +145,22 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                     গ্রাহক
                 </a>
+                <a href="#public-page" onclick="window.switchTab('public-page')" id="nav-public-page" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    পাবলিক পেইজ এডিটর
+                </a>
                 
                 <div class="pt-2 mt-2"></div>
-                <!-- Public View Link in Sidebar (Normalized Style) -->
-                <a href="#public" onclick="window.switchTab('public')" id="nav-public" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
-                    পাবলিক পেইজ
+                <a href="#" id="sidebar-shop-link" target="_blank" class="nav-link flex items-center gap-3 px-4 py-3 text-emerald-400 hover:bg-gray-800 hover:text-emerald-300 rounded-lg transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    Naisargik শপ
                 </a>
             </nav>
 
             <div class="p-4 border-t border-gray-700 bg-gray-900" id="sidebar-footer">
                 <button onclick="window.openModal('settings-modal')" class="w-full flex items-center justify-center gap-2 px-4 py-2 mb-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors text-sm font-medium">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    সেটিংস ও লোগো
+                    সেটিংস
                 </button>
                 <button id="logout-btn" class="w-full flex items-center justify-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors text-sm font-medium">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
@@ -152,13 +169,12 @@
             </div>
         </aside>
 
-        <!-- Main Content Area -->
         <main class="flex-1 flex flex-col h-screen overflow-hidden relative pb-16 md:pb-0 bg-gray-50"> 
             
             <header id="admin-main-header" class="bg-white shadow-sm border-b border-gray-200 px-4 md:px-6 py-4 flex justify-between items-center z-10 transition-all">
                 <div class="flex items-center gap-3">
-                    <img src="" class="brand-logo hidden w-8 h-8 object-contain md:hidden" alt="Logo">
-                    <div class="brand-initial w-8 h-8 bg-primary text-white rounded-full flex md:hidden items-center justify-center font-bold text-sm shadow-sm">A</div>
+                    <img src="" class="brand-logo hidden w-auto max-w-[120px] h-8 object-contain md:hidden" alt="Logo">
+                    <div class="brand-initial w-8 h-8 bg-primary text-white rounded-full flex md:hidden items-center justify-center font-bold text-sm shadow-sm">N</div>
                     <h1 id="header-title" class="text-xl md:text-2xl font-bold text-gray-800">ড্যাশবোর্ড ওভারভিউ</h1>
                 </div>
                 
@@ -174,21 +190,80 @@
 
             <div class="flex-1 overflow-y-auto relative" id="main-scroll-area">
                 
-                <!-- Inner Wrapper for Admin Padding -->
                 <div id="admin-padding-wrapper" class="p-4 md:p-6 transition-all">
                     
-                    <!-- Dashboard Statistics -->
+                    <!-- Dashboard Section (Advanced Analytics) -->
                     <div id="section-dashboard" class="page-section space-y-6 block">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8">
-                            <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
-                                <div class="w-14 h-14 bg-emerald-100 text-primary rounded-xl flex items-center justify-center">
-                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                        <!-- Main KPIs -->
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 mb-6">
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
+                                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-gray-500 font-medium">মোট অর্ডার</p>
-                                    <h3 class="text-2xl font-bold text-gray-800" id="stat-orders-count">০</h3>
+                                    <p class="text-xs text-gray-500 font-medium">আজকের অর্ডার</p>
+                                    <h3 class="text-xl font-bold text-gray-800" id="stat-today-orders">০</h3>
                                 </div>
                             </div>
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
+                                <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 font-medium">আজকের সেলস (৳)</p>
+                                    <h3 class="text-xl font-bold text-gray-800" id="stat-today-revenue">০</h3>
+                                </div>
+                            </div>
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
+                                <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 font-medium">চলতি মাসের সেলস</p>
+                                    <h3 class="text-xl font-bold text-gray-800" id="stat-month-revenue">০</h3>
+                                </div>
+                            </div>
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
+                                <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 font-medium">সর্বমোট অর্ডার</p>
+                                    <h3 class="text-xl font-bold text-gray-800" id="stat-total-orders">০</h3>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Order Status Breakdown -->
+                        <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-8">
+                            <div class="bg-white border border-gray-100 p-4 rounded-xl text-center shadow-sm">
+                                <div class="text-2xl font-bold text-yellow-600 mb-1" id="stat-pending-verification">০</div>
+                                <div class="text-xs text-gray-500 font-medium uppercase tracking-wide">Pending Verif.</div>
+                            </div>
+                            <div class="bg-white border border-gray-100 p-4 rounded-xl text-center shadow-sm">
+                                <div class="text-2xl font-bold text-purple-600 mb-1" id="stat-in-processing">০</div>
+                                <div class="text-xs text-gray-500 font-medium uppercase tracking-wide">Processing</div>
+                            </div>
+                            <div class="bg-white border border-gray-100 p-4 rounded-xl text-center shadow-sm">
+                                <div class="text-2xl font-bold text-pink-600 mb-1" id="stat-in-packing">০</div>
+                                <div class="text-xs text-gray-500 font-medium uppercase tracking-wide">Packing</div>
+                            </div>
+                            <div class="bg-white border border-gray-100 p-4 rounded-xl text-center shadow-sm">
+                                <div class="text-2xl font-bold text-cyan-600 mb-1" id="stat-shipped-today">০</div>
+                                <div class="text-xs text-gray-500 font-medium uppercase tracking-wide">Shipped Today</div>
+                            </div>
+                            <div class="bg-white border border-gray-100 p-4 rounded-xl text-center shadow-sm">
+                                <div class="text-2xl font-bold text-green-600 mb-1" id="stat-delivered-orders">০</div>
+                                <div class="text-xs text-gray-500 font-medium uppercase tracking-wide">Delivered (All)</div>
+                            </div>
+                            <div class="bg-white border border-gray-100 p-4 rounded-xl text-center shadow-sm">
+                                <div class="text-2xl font-bold text-red-600 mb-1" id="stat-cancelled-orders">০</div>
+                                <div class="text-xs text-gray-500 font-medium uppercase tracking-wide">Cancelled</div>
+                            </div>
+                        </div>
+
+                        <!-- System Overviews -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                             <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
                                 <div class="w-14 h-14 bg-amber-100 text-secondary rounded-xl flex items-center justify-center">
                                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
@@ -232,50 +307,33 @@
                                         </tr>
                                     </thead>
                                     <tbody id="products-table-body" class="block md:table-row-group text-sm text-gray-700">
-                                        <!-- Dynamic rows -->
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Orders Section -->
+                    <!-- Orders Section (Upgraded Workflow) -->
                     <div id="section-orders" class="page-section hidden space-y-4 md:space-y-6">
                         <div class="flex flex-col md:flex-row justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-gray-100 gap-4">
-                            <div class="flex gap-2 bg-gray-100 p-1 rounded-lg w-full md:w-auto overflow-x-auto justify-center">
-                                <button onclick="window.toggleOrderTab('pending')" id="tab-btn-pending" class="whitespace-nowrap flex-1 md:flex-none px-4 md:px-6 py-2 rounded-md text-sm font-bold bg-white text-primary shadow-sm transition-all">নতুন ও অপেক্ষমাণ</button>
-                                <button onclick="window.toggleOrderTab('completed')" id="tab-btn-completed" class="whitespace-nowrap flex-1 md:flex-none px-4 md:px-6 py-2 rounded-md text-sm font-bold text-gray-500 hover:text-gray-700 transition-all">সম্পূর্ণ হওয়া বক্স</button>
-                            </div>
-                            <button onclick="window.generateMockOrder()" class="w-full md:w-auto justify-center bg-secondary hover:bg-amber-700 text-white text-xs font-bold py-2.5 px-4 rounded-lg transition-all flex items-center gap-2">
+                            <h2 class="font-bold text-gray-800 text-lg hidden md:block">অর্ডার ম্যানেজমেন্ট</h2>
+                            <button onclick="window.generateMockOrder()" class="w-full md:w-auto justify-center bg-secondary hover:bg-amber-700 text-white text-xs font-bold py-2.5 px-4 rounded-lg transition-all flex items-center gap-2 shadow-sm">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                                 ডেমো অর্ডার তৈরি করুন
                             </button>
                         </div>
 
-                        <!-- Pending Orders -->
-                        <div id="orders-pending-container" class="bg-transparent md:bg-white md:rounded-2xl md:shadow-sm md:border border-gray-100">
-                            <div class="p-4 border-b border-gray-100 bg-gray-50/50 hidden md:block rounded-t-2xl">
-                                <h2 class="font-bold text-gray-800">অপেক্ষমাণ ও কনফার্মড অর্ডার তালিকা</h2>
+                        <!-- Scrollable Status Tabs -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-2 overflow-hidden">
+                            <div class="flex gap-2 overflow-x-auto timeline-scrollbar pb-2" id="order-tabs-container">
+                                <!-- Dynamic Status Tabs injected via JS -->
                             </div>
-                            <table class="w-full text-left border-collapse">
-                                <thead class="hidden md:table-header-group">
-                                    <tr class="bg-gray-50 text-gray-500 text-sm border-b border-gray-100">
-                                        <th class="p-4 font-medium">অর্ডার আইডি ও তারিখ</th>
-                                        <th class="p-4 font-medium">গ্রাহক</th>
-                                        <th class="p-4 font-medium">মোট বিল</th>
-                                        <th class="p-4 font-medium">স্ট্যাটাস</th>
-                                        <th class="p-4 font-medium text-right">অ্যাকশন</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="orders-pending-table-body" class="block md:table-row-group text-sm text-gray-700">
-                                </tbody>
-                            </table>
                         </div>
 
-                        <!-- Completed Orders -->
-                        <div id="orders-completed-container" class="hidden bg-transparent md:bg-white md:rounded-2xl md:shadow-sm md:border border-gray-100">
-                            <div class="p-4 border-b border-gray-100 bg-emerald-50/50 hidden md:block rounded-t-2xl">
-                                <h2 class="font-bold text-primary">সম্পূর্ণ হওয়া অর্ডার বক্স</h2>
+                        <!-- Orders Unified Table -->
+                        <div class="bg-transparent md:bg-white md:rounded-2xl md:shadow-sm md:border border-gray-100">
+                            <div class="p-4 border-b border-gray-100 bg-gray-50/50 hidden md:flex justify-between items-center rounded-t-2xl">
+                                <h2 class="font-bold text-gray-800" id="current-tab-title">অর্ডার তালিকা</h2>
                             </div>
                             <table class="w-full text-left border-collapse">
                                 <thead class="hidden md:table-header-group">
@@ -287,9 +345,14 @@
                                         <th class="p-4 font-medium text-right">অ্যাকশন</th>
                                     </tr>
                                 </thead>
-                                <tbody id="orders-completed-table-body" class="block md:table-row-group text-sm text-gray-700">
+                                <tbody id="orders-unified-table-body" class="block md:table-row-group text-sm text-gray-700">
+                                    <!-- Populated dynamically -->
                                 </tbody>
                             </table>
+                            <div id="no-orders-msg" class="hidden p-8 text-center text-gray-500 bg-white md:bg-transparent rounded-xl">
+                                <svg class="w-12 h-12 mx-auto mb-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
+                                এই সেকশনে কোনো অর্ডার নেই।
+                            </div>
                         </div>
                     </div>
 
@@ -317,181 +380,53 @@
                         </div>
                     </div>
 
-                </div>
-
-                <!-- ================= PUBLIC STOREFRONT SECTION ================= -->
-                <div id="section-public" class="page-section hidden w-full relative">
-                    
-                    <!-- Admin Edit Content Floating Button -->
-                    <button onclick="window.openModal('edit-frontend-modal')" class="fixed bottom-20 right-4 md:bottom-6 md:right-6 bg-blue-600 hover:bg-blue-700 text-white shadow-xl rounded-full px-4 py-3 flex items-center gap-2 font-bold z-50 transition-transform transform hover:scale-105 border-2 border-white">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                        পেইজ ইডিট করুন
-                    </button>
-
-                    <nav class="glass-nav border-b border-emerald-100 shadow-sm transition-all py-3 md:py-4 w-full">
-                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-                            <div class="flex items-center gap-2">
-                                <img src="" class="brand-logo hidden w-8 h-8 md:w-10 md:h-10 object-contain bg-white rounded-lg p-0.5 shadow-sm" alt="Logo">
-                                <div class="brand-initial w-8 h-8 md:w-10 md:h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg md:text-xl shadow-lg">A</div>
-                                <span class="font-bold text-xl md:text-2xl text-primary tracking-tight">Anowarmart<span class="text-secondary text-sm md:text-lg">BD</span></span>
+                    <!-- Public Page Section -->
+                    <div id="section-public-page" class="page-section hidden">
+                        <div class="bg-white md:rounded-2xl shadow-sm border border-gray-100 p-8 text-center min-h-[400px] flex flex-col items-center justify-center">
+                            <div class="w-20 h-20 bg-gray-100 text-gray-400 rounded-full flex items-center justify-center mb-6">
+                                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                             </div>
-                            
-                            <div class="flex items-center gap-4">
-                                <button onclick="window.openCart()" class="relative p-2 text-primary hover:bg-emerald-100 rounded-full transition">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 md:w-7 md:h-7">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                                    </svg>
-                                    <span id="cart-count" class="absolute top-0 right-0 bg-secondary text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white transition-transform">0</span>
-                                </button>
-                            </div>
-                        </div>
-                    </nav>
-
-                    <section class="py-12 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-8 md:gap-12">
-                        <div class="w-full lg:w-1/2 space-y-4 md:space-y-6 text-center lg:text-left">
-                            <span class="inline-block py-1 px-3 rounded-full bg-emerald-100 text-primary font-semibold text-xs md:text-sm mb-2 border border-emerald-200">১০০% প্রাকৃতিক ও ভেজালমুক্ত</span>
-                            <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                                <span id="public-hero-title">প্রকৃতির আসল স্বাদ,</span> <br class="hidden md:block">
-                                <span id="public-hero-highlight" class="text-primary">সরাসরি আপনার টেবিলে</span>
-                            </h1>
-                            <p id="public-hero-subtitle" class="text-base md:text-lg text-gray-600 max-w-lg mx-auto lg:mx-0">
-                                ভেজালমুক্ত খাঁটি মধু, গাওয়া ঘি, গুড় এবং অর্গানিক সুপারফুড। আপনার পরিবারের স্বাস্থ্য সুরক্ষায় আমরা অঙ্গীকারবদ্ধ।
-                            </p>
-                            <div class="pt-2">
-                                <a href="javascript:void(0)" onclick="document.getElementById('public-products-container').scrollIntoView({behavior: 'smooth'})" class="inline-block bg-primary hover:bg-emerald-800 text-white font-semibold py-3 px-8 rounded-full shadow-lg shadow-emerald-200 transition-all transform hover:-translate-y-1 text-base md:text-lg">
-                                    পণ্যগুলো দেখুন
-                                </a>
-                            </div>
-                        </div>
-                        <div class="w-full lg:w-1/2 relative">
-                            <div class="absolute inset-0 bg-secondary/20 rounded-full blur-3xl transform -translate-x-10 translate-y-10"></div>
-                            <img id="public-hero-img" src="https://images.unsplash.com/photo-1587049352847-4d4b1a41bb98?q=80&w=800&auto=format&fit=crop" alt="Premium Products" class="relative z-10 rounded-2xl shadow-xl md:shadow-2xl object-cover w-full h-[250px] md:h-[400px] border-4 border-white">
-                        </div>
-                    </section>
-
-                    <section class="bg-white py-8 md:py-10 border-y border-emerald-100">
-                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-center">
-                                <div class="flex flex-col items-center p-2 md:p-4">
-                                    <div class="w-12 h-12 md:w-16 md:h-16 bg-emerald-50 rounded-full flex items-center justify-center text-primary mb-3 md:mb-4">
-                                        <svg class="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                    </div>
-                                    <h3 class="font-bold text-lg md:text-xl text-gray-800 mb-1 md:mb-2">১০০% খাঁটি পণ্য</h3>
-                                    <p class="text-gray-500 text-xs md:text-sm">সরাসরি কৃষক ও সোর্স থেকে সংগৃহীত, কোনো ভেজাল নেই।</p>
-                                </div>
-                                <div class="flex flex-col items-center p-2 md:p-4 border-t md:border-t-0 md:border-l border-emerald-100">
-                                    <div class="w-12 h-12 md:w-16 md:h-16 bg-amber-50 rounded-full flex items-center justify-center text-secondary mb-3 md:mb-4">
-                                        <svg class="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                                    </div>
-                                    <h3 class="font-bold text-lg md:text-xl text-gray-800 mb-1 md:mb-2">ক্যাশ অন ডেলিভারি</h3>
-                                    <p class="text-gray-500 text-xs md:text-sm">পণ্য হাতে পেয়ে চেক করে তারপর মূল্য পরিশোধ করুন।</p>
-                                </div>
-                                <div class="flex flex-col items-center p-2 md:p-4 border-t md:border-t-0 md:border-l border-emerald-100">
-                                    <div class="w-12 h-12 md:w-16 md:h-16 bg-emerald-50 rounded-full flex items-center justify-center text-primary mb-3 md:mb-4">
-                                        <svg class="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                    </div>
-                                    <h3 class="font-bold text-lg md:text-xl text-gray-800 mb-1 md:mb-2">দ্রুত ডেলিভারি</h3>
-                                    <p class="text-gray-500 text-xs md:text-sm">সারাদেশে ২৪-৭২ ঘন্টার মধ্যে দ্রুততম হোম ডেলিভারি।</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="py-12 md:py-20 bg-emerald-50/50">
-                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                            <div class="text-center mb-10 md:mb-16">
-                                <h2 class="text-2xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">আমাদের <span class="text-primary">জনপ্রিয় পণ্যসমূহ</span></h2>
-                                <div class="w-20 md:w-24 h-1 bg-secondary mx-auto rounded-full"></div>
-                                <p class="mt-3 md:mt-4 text-sm md:text-base text-gray-600">খাঁটি খাবারের সেরা কালেকশন থেকে আপনার পছন্দের পণ্যটি বেছে নিন</p>
-                            </div>
-
-                            <!-- Dynamic Products Container for Public View -->
-                            <div id="public-products-container" class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-                                <!-- Loaded via JS -->
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Contact Banner Section -->
-                    <section class="py-12 bg-primary text-white text-center px-4">
-                        <div class="max-w-3xl mx-auto space-y-4">
-                            <h2 class="text-2xl font-bold">অর্ডার করতে সরাসরি কল করুন</h2>
-                            <p class="text-emerald-100 text-sm md:text-base">যেকোনো তথ্য জানতে বা ফোনে অর্ডার করতে আমাদের সাথে যোগাযোগ করুন।</p>
-                            <a id="public-call-btn" href="tel:01700000000" class="inline-block mt-4 bg-secondary hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform hover:scale-105 text-lg">
-                                <span id="public-contact-phone">০১৭০০-০০০০০০</span>
+                            <h2 class="text-2xl font-bold text-gray-800 mb-2">পাবলিক পেইজ এডিটর</h2>
+                            <p class="text-gray-500 max-w-md mx-auto mb-6">এই ফিচারটি ব্যবহার করে আপনি আপনার পাবলিক ওয়েবসাইটের পেজগুলোর কন্টেন্ট এবং ডিজাইন সহজে এডিট করতে পারবেন।</p>
+                            <a href="#" target="_blank" id="public-editor-link-btn" class="hidden bg-primary hover:bg-emerald-800 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2">
+                                এডিটর ওপেন করুন
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                             </a>
+                            <p id="public-editor-no-link-msg" class="text-sm text-red-500 mt-2">সেটিংস থেকে এডিটরের লিংক যুক্ত করুন।</p>
                         </div>
-                    </section>
+                    </div>
 
-                    <!-- Footer -->
-                    <footer class="bg-gray-900 text-gray-300 py-10 md:py-12 px-4 sm:px-6 lg:px-8 border-t-4 border-secondary pb-24 md:pb-12">
-                        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-                            <div>
-                                <div class="flex items-center gap-2 mb-4">
-                                    <img src="" class="brand-logo hidden w-8 h-8 object-contain bg-white rounded-lg p-0.5" alt="Logo">
-                                    <div class="brand-initial w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-sm">A</div>
-                                    <span class="font-bold text-xl text-white">AnowarmartBD</span>
-                                </div>
-                                <p id="public-footer-about" class="text-sm text-gray-400 mb-4">প্রকৃতির খাঁটি স্বাদ, পৌঁছে যাবে আপনার দুয়ারে। সেরা মানের পণ্য দিয়ে আপনাদের সেবা করাই আমাদের মূল লক্ষ্য।</p>
-                            </div>
-                            <div>
-                                <h4 class="text-lg font-bold text-white mb-4">যোগাযোগের ঠিকানা</h4>
-                                <ul class="space-y-3 text-sm text-gray-400">
-                                    <li class="flex items-start gap-2">
-                                        <svg class="w-5 h-5 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                        <span id="public-footer-address">মিরপুর ১০, ঢাকা, বাংলাদেশ</span>
-                                    </li>
-                                    <li class="flex items-center gap-2">
-                                        <svg class="w-5 h-5 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                                        <span id="public-footer-email">info@anowarmartbd.com</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h4 class="text-lg font-bold text-white mb-4">প্রয়োজনীয় লিংক</h4>
-                                <ul class="space-y-2 text-sm">
-                                    <li><a href="#" class="hover:text-secondary transition">রিটার্ন পলিসি</a></li>
-                                    <li><a href="#" class="hover:text-secondary transition">ডেলিভারি চার্জ</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="max-w-7xl mx-auto mt-8 md:mt-12 pt-6 md:pt-8 border-t border-gray-800 text-center text-xs md:text-sm text-gray-500">
-                            &copy; 2026 AnowarmartBD. All rights reserved.
-                        </div>
-                    </footer>
                 </div>
-                <!-- End Public Section -->
-
             </div>
 
-            <!-- Mobile Bottom Navigation Bar (Normalized Standard Styling) -->
-            <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 flex justify-between px-1 pb-1 pt-1 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
-                <a href="#dashboard" onclick="window.switchTab('dashboard')" data-tab="dashboard" class="mobile-nav-link text-primary flex flex-col items-center justify-center w-1/5 py-1.5 transition-colors">
+            <!-- Mobile Navigation -->
+            <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 flex justify-between px-1 pb-1 pt-1 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] overflow-x-auto">
+                <a href="#dashboard" onclick="window.switchTab('dashboard')" data-tab="dashboard" class="mobile-nav-link text-primary flex flex-col items-center justify-center min-w-[20%] py-1.5 transition-colors">
                     <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                     <span class="text-[9px] font-bold">ড্যাশবোর্ড</span>
                 </a>
-                <a href="#products" onclick="window.switchTab('products')" data-tab="products" class="mobile-nav-link text-gray-400 hover:text-primary flex flex-col items-center justify-center w-1/5 py-1.5 transition-colors">
+                <a href="#products" onclick="window.switchTab('products')" data-tab="products" class="mobile-nav-link text-gray-400 hover:text-primary flex flex-col items-center justify-center min-w-[20%] py-1.5 transition-colors">
                     <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
                     <span class="text-[9px] font-bold">পণ্য</span>
                 </a>
-                <a href="#orders" onclick="window.switchTab('orders')" data-tab="orders" class="mobile-nav-link text-gray-400 hover:text-primary flex flex-col items-center justify-center w-1/5 py-1.5 transition-colors">
+                <a href="#orders" onclick="window.switchTab('orders')" data-tab="orders" class="mobile-nav-link text-gray-400 hover:text-primary flex flex-col items-center justify-center min-w-[20%] py-1.5 transition-colors">
                     <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
                     <span class="text-[9px] font-bold">অর্ডার</span>
                 </a>
-                <a href="#customers" onclick="window.switchTab('customers')" data-tab="customers" class="mobile-nav-link text-gray-400 hover:text-primary flex flex-col items-center justify-center w-1/5 py-1.5 transition-colors">
+                <a href="#customers" onclick="window.switchTab('customers')" data-tab="customers" class="mobile-nav-link text-gray-400 hover:text-primary flex flex-col items-center justify-center min-w-[20%] py-1.5 transition-colors">
                     <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                     <span class="text-[9px] font-bold">গ্রাহক</span>
                 </a>
-                <!-- Normal Styling for Public Link -->
-                <a href="#public" onclick="window.switchTab('public')" data-tab="public" class="mobile-nav-link text-gray-400 hover:text-primary flex flex-col items-center justify-center w-1/5 py-1.5 transition-colors">
-                    <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
-                    <span class="text-[9px] font-bold">পাবলিক</span>
+                <a href="#public-page" onclick="window.switchTab('public-page')" data-tab="public-page" class="mobile-nav-link text-gray-400 hover:text-primary flex flex-col items-center justify-center min-w-[20%] py-1.5 transition-colors">
+                    <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    <span class="text-[9px] font-bold">এডিটর</span>
                 </a>
             </nav>
 
-            <!-- Modals specific to Admin -->
+            <!-- Modals -->
+
+            <!-- Settings Modal -->
             <div id="settings-modal" class="fixed inset-0 bg-black/50 z-[60] hidden items-center justify-center backdrop-blur-sm p-4 transition-opacity">
-                <!-- content as before -->
                 <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden my-8">
                     <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50">
                         <h3 class="font-bold text-lg text-gray-800">সাইট সেটিংস ও লোগো</h3>
@@ -503,74 +438,17 @@
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">লোগোর URL (Image Link)</label>
                             <input type="url" id="setting-logo-url" placeholder="https://example.com/logo.png" class="w-full px-3 py-3 border rounded-lg focus:ring-primary focus:border-primary transition-colors">
-                            <p class="text-xs text-gray-500 mt-2">আপনার লোগোটি কোনো সাইটে আপলোড করে তার লিংকটি এখানে দিন।</p>
+                            <p class="text-xs text-gray-500 mt-2">আপনার লোগোটি কোনো সাইটে আপলোড করে তার লিংকটি এখানে দিন। (আয়তাকার লোগো ব্যবহার করুন)</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">অনলাইন শপের লিংক</label>
+                            <input type="url" id="setting-shop-url" placeholder="https://www.naisargik.com" class="w-full px-3 py-3 border rounded-lg focus:ring-primary focus:border-primary transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">পাবলিক পেইজ এডিটর লিংক</label>
+                            <input type="url" id="setting-editor-url" placeholder="https://editor.example.com" class="w-full px-3 py-3 border rounded-lg focus:ring-primary focus:border-primary transition-colors">
                         </div>
                         <button onclick="window.saveSettings()" class="w-full py-3 bg-primary hover:bg-emerald-800 transition-colors text-white font-bold rounded-xl mt-4">সেভ করুন</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Edit Public Frontend Content Modal -->
-            <div id="edit-frontend-modal" class="fixed inset-0 bg-black/50 z-[60] hidden items-center justify-center backdrop-blur-sm p-4 overflow-y-auto transition-opacity">
-                <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden my-8">
-                    <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-blue-50">
-                        <h3 class="font-bold text-lg text-blue-800 flex items-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                            পাবলিক পেইজ এডিট করুন
-                        </h3>
-                        <button onclick="window.closeModal('edit-frontend-modal')" class="text-gray-400 hover:text-red-500">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                        </button>
-                    </div>
-                    <div class="p-6 max-h-[70vh] overflow-y-auto space-y-5 bg-gray-50">
-                        <div class="bg-white p-4 rounded-xl border border-gray-200">
-                            <h4 class="font-bold text-gray-700 mb-3 border-b pb-2">হোম পেইজ ব্যানার (Hero Section)</h4>
-                            <div class="space-y-3">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">শিরোনাম (সাধারণ লেখা)</label>
-                                    <input type="text" id="edit-hero-title" class="w-full px-3 py-2 border rounded-lg focus:ring-primary focus:border-primary outline-none">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">শিরোনাম (রঙিন/হাইলাইট করা লেখা)</label>
-                                    <input type="text" id="edit-hero-highlight" class="w-full px-3 py-2 border rounded-lg focus:ring-primary focus:border-primary outline-none">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">বিস্তারিত বিবরণ (Subtitle)</label>
-                                    <textarea id="edit-hero-subtitle" rows="2" class="w-full px-3 py-2 border rounded-lg focus:ring-primary focus:border-primary outline-none"></textarea>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">ব্যানার ছবির লিংক (Image URL)</label>
-                                    <input type="url" id="edit-hero-img" class="w-full px-3 py-2 border rounded-lg focus:ring-primary focus:border-primary outline-none">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-4 rounded-xl border border-gray-200">
-                            <h4 class="font-bold text-gray-700 mb-3 border-b pb-2">যোগাযোগ ও ফুটার তথ্য</h4>
-                            <div class="space-y-3">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">যোগাযোগের মোবাইল নাম্বার</label>
-                                    <input type="text" id="edit-contact-phone" class="w-full px-3 py-2 border rounded-lg focus:ring-primary focus:border-primary outline-none">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">ফুটারের সংক্ষিপ্ত বিবরণ</label>
-                                    <textarea id="edit-footer-about" rows="2" class="w-full px-3 py-2 border rounded-lg focus:ring-primary focus:border-primary outline-none"></textarea>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">অফিসের ঠিকানা</label>
-                                    <input type="text" id="edit-footer-address" class="w-full px-3 py-2 border rounded-lg focus:ring-primary focus:border-primary outline-none">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">অফিসিয়াল ইমেইল</label>
-                                    <input type="email" id="edit-footer-email" class="w-full px-3 py-2 border rounded-lg focus:ring-primary focus:border-primary outline-none">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex gap-3 pt-2">
-                            <button type="button" onclick="window.closeModal('edit-frontend-modal')" class="flex-1 px-4 py-3 bg-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-300 transition-colors">বাতিল</button>
-                            <button type="button" onclick="window.saveFrontendSettings()" class="flex-1 px-4 py-3 bg-blue-600 hover:bg-blue-700 transition-colors text-white font-bold rounded-xl">পাবলিশ করুন</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -644,82 +522,133 @@
                 </div>
             </div>
 
-            <!-- View Order Modal -->
+            <!-- Upgraded View Order Modal -->
             <div id="view-order-modal" class="fixed inset-0 bg-black/60 z-[60] hidden items-center justify-center backdrop-blur-sm p-4 sm:p-6 overflow-y-auto">
-                <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl overflow-hidden flex flex-col max-h-[90vh]">
-                    <div class="px-4 md:px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                <div class="bg-white rounded-2xl shadow-2xl w-full max-w-5xl overflow-hidden flex flex-col max-h-[95vh] md:max-h-[90vh]">
+                    <!-- Modal Header -->
+                    <div class="px-4 md:px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50 shrink-0">
                         <div>
                             <h3 class="font-bold text-lg md:text-xl text-gray-800 flex items-center gap-2">
                                 <svg class="w-5 h-5 md:w-6 md:h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
-                                অর্ডার বিস্তারিত
+                                অর্ডার বিস্তারিত 
+                                <span id="modal-status-badge" class="ml-2 text-xs px-2 py-1 rounded-full uppercase tracking-wider font-bold"></span>
                             </h3>
-                            <p class="text-sm text-gray-500 mt-1" id="modal-order-id">অর্ডার আইডি: #----</p>
+                            <p class="text-sm text-gray-500 mt-1 font-mono" id="modal-order-id">ID: #----</p>
                         </div>
                         <button onclick="window.closeModal('view-order-modal')" class="text-gray-400 hover:text-red-500 bg-gray-200 hover:bg-red-100 p-2 rounded-full transition-colors">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                         </button>
                     </div>
                     
-                    <div class="p-4 md:p-6 overflow-y-auto flex-1 space-y-6 bg-white">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                            <div class="bg-blue-50/50 border border-blue-100 p-4 md:p-5 rounded-xl">
-                                <h4 class="font-bold text-blue-800 border-b border-blue-200 pb-2 mb-3 flex items-center gap-2">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                                    গ্রাহকের তথ্য
-                                </h4>
-                                <div class="space-y-2 text-sm">
-                                    <p><span class="text-gray-500 w-24 inline-block font-medium">নাম:</span> <span id="modal-customer-name" class="font-bold text-gray-800">---</span></p>
-                                    <p><span class="text-gray-500 w-24 inline-block font-medium">মোবাইল:</span> <span id="modal-customer-phone" class="font-medium text-gray-800">---</span></p>
-                                    <p><span class="text-gray-500 w-24 inline-block font-medium">ঠিকানা:</span> <span id="modal-customer-address" class="text-gray-800">---</span></p>
+                    <!-- Order Content -->
+                    <div class="overflow-y-auto flex-1 bg-white">
+                        
+                        <!-- Timeline Tracker -->
+                        <div class="bg-gray-50 border-b border-gray-200 p-4 md:px-6 overflow-x-auto timeline-scrollbar">
+                            <div class="flex items-center min-w-max" id="modal-timeline-container">
+                                <!-- Generated Dynamically -->
+                            </div>
+                        </div>
+
+                        <div class="p-4 md:p-6 space-y-6">
+                            <!-- Information Grids -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                                <!-- Customer Info -->
+                                <div class="bg-white border border-gray-200 p-4 md:p-5 rounded-xl shadow-sm">
+                                    <h4 class="font-bold text-gray-800 border-b border-gray-100 pb-2 mb-3 flex items-center gap-2">
+                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                        Customer Information
+                                    </h4>
+                                    <div class="space-y-2 text-sm">
+                                        <p><span class="text-gray-500 w-20 inline-block font-medium">Name:</span> <span id="modal-customer-name" class="font-bold text-gray-800">---</span></p>
+                                        <p><span class="text-gray-500 w-20 inline-block font-medium">Phone:</span> <span id="modal-customer-phone" class="font-medium text-gray-800">---</span></p>
+                                        <p><span class="text-gray-500 w-20 inline-block font-medium align-top">Address:</span> <span id="modal-customer-address" class="inline-block w-[calc(100%-6rem)] text-gray-800">---</span></p>
+                                    </div>
+                                </div>
+
+                                <!-- Shipping & Courier Info (Editable) -->
+                                <div class="bg-white border border-gray-200 p-4 md:p-5 rounded-xl shadow-sm">
+                                    <h4 class="font-bold text-gray-800 border-b border-gray-100 pb-2 mb-3 flex items-center gap-2">
+                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                                        Shipping Information
+                                    </h4>
+                                    <div class="space-y-3 text-sm">
+                                        <div class="flex gap-2">
+                                            <div class="w-1/2">
+                                                <label class="block text-xs text-gray-500 mb-1">Courier Name</label>
+                                                <input type="text" id="modal-courier-name" placeholder="e.g. Steadfast" class="w-full border px-2 py-1.5 rounded outline-none focus:border-primary">
+                                            </div>
+                                            <div class="w-1/2">
+                                                <label class="block text-xs text-gray-500 mb-1">Courier Phone</label>
+                                                <input type="text" id="modal-courier-phone" placeholder="Phone..." class="w-full border px-2 py-1.5 rounded outline-none focus:border-primary">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs text-gray-500 mb-1">Tracking Number</label>
+                                            <input type="text" id="modal-tracking" placeholder="Tracking ID..." class="w-full border px-2 py-1.5 rounded outline-none focus:border-primary">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="bg-gray-50 border border-gray-200 p-4 md:p-5 rounded-xl flex flex-col justify-center items-center text-center">
-                                <h4 class="text-gray-500 font-medium mb-2">বর্তমান স্ট্যাটাস</h4>
-                                <div id="modal-status-badge" class="px-4 py-2 text-sm md:text-base md:px-6 rounded-full font-bold border"></div>
+                            <!-- Products Info -->
+                            <div class="border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                                <div class="bg-gray-50 p-3 border-b border-gray-200 flex justify-between items-center">
+                                    <h4 class="font-bold text-gray-800 text-sm md:text-base flex items-center gap-2">
+                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                                        Products Ordered
+                                    </h4>
+                                    <!-- Date Display -->
+                                    <span class="text-xs text-gray-500" id="modal-order-date">Date: ---</span>
+                                </div>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left border-collapse">
+                                        <thead>
+                                            <tr class="bg-white text-gray-500 text-xs uppercase border-b border-gray-100">
+                                                <th class="p-3 font-semibold">Product Name</th>
+                                                <th class="p-3 font-semibold text-center">Qty</th>
+                                                <th class="p-3 font-semibold text-right">Price</th>
+                                                <th class="p-3 font-semibold text-right">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="modal-order-items" class="text-sm text-gray-700 divide-y divide-gray-50 bg-white">
+                                            <!-- Dynamic items -->
+                                        </tbody>
+                                        <tfoot>
+                                            <tr class="bg-gray-50">
+                                                <td colspan="3" class="p-3 text-right font-bold text-gray-700 uppercase text-xs">Total Amount:</td>
+                                                <td class="p-3 text-right font-bold text-primary text-base" id="modal-total-price">৳ 0</td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="border border-gray-200 rounded-xl overflow-hidden">
-                            <div class="bg-gray-100 p-3 border-b border-gray-200">
-                                <h4 class="font-bold text-gray-700 text-sm md:text-base">অর্ডারকৃত পণ্যসমূহ</h4>
+                            <!-- Admin Note -->
+                            <div class="bg-white border border-gray-200 p-4 md:p-5 rounded-xl shadow-sm">
+                                <h4 class="font-bold text-gray-800 border-b border-gray-100 pb-2 mb-3 text-sm">Admin Notes</h4>
+                                <textarea id="modal-admin-note" rows="2" placeholder="Write any internal notes regarding this order here..." class="w-full border px-3 py-2 rounded-lg outline-none focus:border-primary text-sm"></textarea>
                             </div>
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-left border-collapse">
-                                    <thead>
-                                        <tr class="bg-gray-50 text-gray-500 text-xs uppercase">
-                                            <th class="p-3 font-semibold border-b">পণ্য</th>
-                                            <th class="p-3 font-semibold border-b text-center">পরিমাণ</th>
-                                            <th class="p-3 font-semibold border-b text-right">মোট</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="modal-order-items" class="text-sm text-gray-700 divide-y divide-gray-100">
-                                    </tbody>
-                                    <tfoot>
-                                        <tr class="bg-emerald-50">
-                                            <td colspan="2" class="p-3 text-right font-bold text-gray-700">সর্বমোট বিল:</td>
-                                            <td class="p-3 text-right font-bold text-primary text-base md:text-lg" id="modal-total-price">৳ ০</td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
+
                         </div>
                     </div>
 
-                    <div class="p-4 md:p-5 border-t border-gray-200 bg-gray-50 flex flex-col md:flex-row justify-between items-center gap-4">
-                        <button onclick="window.printOrder()" class="w-full md:w-auto px-4 py-2 bg-white border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                            প্রিন্ট
-                        </button>
-                        <div class="w-full md:w-auto flex flex-col sm:flex-row gap-3 items-center">
-                            <button id="btn-confirm-order" onclick="window.confirmOrderAction()" class="hidden w-full sm:w-auto justify-center px-6 py-2.5 bg-secondary hover:bg-amber-600 text-white rounded-lg font-bold shadow-md transition-all flex items-center gap-2">
-                                কনফার্ম করুন
+                    <!-- Modal Actions Footer -->
+                    <div class="p-4 md:p-5 border-t border-gray-200 bg-white flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
+                        <div class="flex gap-2 w-full md:w-auto">
+                            <button onclick="window.printPackingSlip()" class="flex-1 md:flex-none px-4 py-2 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg text-sm font-bold transition-colors flex items-center justify-center gap-2 shadow-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                                Packing Slip
                             </button>
-                            <button id="btn-complete-order" onclick="window.completeOrderAction()" class="hidden w-full sm:w-auto justify-center px-6 py-2.5 bg-primary hover:bg-emerald-700 text-white rounded-lg font-bold shadow-lg transition-all flex items-center gap-2">
-                                বক্সে পাঠান
+                        </div>
+                        
+                        <div class="w-full md:w-auto flex flex-col sm:flex-row gap-3 items-center justify-end">
+                            <button id="btn-cancel-order" onclick="window.updateStatus('cancelled')" class="w-full sm:w-auto justify-center px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 border border-red-200 rounded-lg font-bold transition-all text-sm">
+                                Cancel Order
                             </button>
-                            <button onclick="window.closeModal('view-order-modal')" class="w-full sm:w-auto justify-center px-6 py-2.5 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-medium transition-all">
-                                বন্ধ করুন
+                            <!-- Dynamic Primary Action Button -->
+                            <button id="btn-primary-action" class="hidden w-full sm:w-auto justify-center px-6 py-2 bg-primary hover:bg-emerald-800 text-white rounded-lg font-bold shadow-md transition-all text-sm">
+                                <!-- Text updated by JS -->
                             </button>
                         </div>
                     </div>
@@ -729,77 +658,13 @@
         </main>
     </div>
 
-    <!-- ==================== CART DRAWER (Public View) ==================== -->
-    <div id="cart-drawer-overlay" class="fixed inset-0 bg-black/50 z-50 hidden transition-opacity duration-300 opacity-0 backdrop-blur-xs" onclick="window.closeCart()"></div>
-    
-    <div id="cart-drawer" class="fixed right-0 top-0 bottom-0 w-full max-w-md bg-white z-[60] shadow-2xl border-l border-emerald-100 transform translate-x-full transition-transform duration-300 flex flex-col">
-        <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-emerald-50">
-            <h3 class="font-bold text-lg text-primary flex items-center gap-2">
-                <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                আপনার শপিং কার্ট
-            </h3>
-            <button onclick="window.closeCart()" class="text-gray-400 hover:text-red-500 transition-colors p-1.5 hover:bg-white rounded-full border border-transparent hover:border-gray-100">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-        </div>
-
-        <div id="cart-content-area" class="flex-1 overflow-y-auto p-5 space-y-4"></div>
-
-        <div id="checkout-form-area" class="hidden flex-1 overflow-y-auto p-5 space-y-5">
-            <h4 class="font-bold text-gray-800 border-b pb-2">ডেলিভারির প্রয়োজনীয় তথ্য দিন</h4>
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1">আপনার নাম <span class="text-red-500">*</span></label>
-                    <input type="text" id="cust-name" required placeholder="যেমন: আব্দুর রহমান" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1">মোবাইল নম্বর <span class="text-red-500">*</span></label>
-                    <input type="tel" id="cust-phone" required placeholder="যেমন: ০১৭XXXXXXXX" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1">পূর্ণ ঠিকানা <span class="text-red-500">*</span></label>
-                    <textarea id="cust-address" rows="3" required placeholder="বাসা/রোড নম্বর, ইউনিয়ন/থানা, জেলা" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none"></textarea>
-                </div>
-            </div>
-            <button onclick="window.backToCartItems()" class="text-primary hover:underline text-sm font-semibold flex items-center gap-1 mt-4">
-                ← কার্টে ফিরে যান
-            </button>
-        </div>
-
-        <div class="border-t border-gray-100 p-5 bg-gray-50 space-y-4">
-            <div class="flex justify-between items-center text-gray-800">
-                <span class="font-semibold">সর্বমোট মূল্য:</span>
-                <span id="cart-total" class="font-bold text-2xl text-primary">৳ ০</span>
-            </div>
-            
-            <div id="cart-action-buttons">
-                <button onclick="window.proceedToCheckout()" id="checkout-btn" class="w-full bg-primary hover:bg-emerald-800 text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-emerald-100 transition-colors flex justify-center items-center gap-2">
-                    অর্ডার কনফার্ম করার দিকে যান
-                </button>
-            </div>
-            <div id="checkout-action-buttons" class="hidden">
-                <button onclick="window.submitOrder()" id="order-submit-btn" class="w-full bg-secondary hover:bg-amber-600 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition-colors">
-                    অর্ডার সম্পন্ন করুন (ক্যাশ অন ডেলিভারি)
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Alert Modal for Success/General Notifications -->
-    <div id="public-alert-modal-overlay" class="fixed inset-0 bg-black/60 z-[70] hidden transition-opacity duration-300 opacity-0 backdrop-blur-sm" onclick="window.closeAlertModal()"></div>
-    <div id="public-alert-modal" class="fixed inset-0 z-[80] hidden flex items-center justify-center p-4 pointer-events-none">
-        <div id="public-alert-modal-content" class="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden flex flex-col transform scale-95 transition-transform duration-300 pointer-events-auto">
-            <div id="public-alert-body" class="p-8 text-center w-full">
-            </div>
-        </div>
-    </div>
-
-
+    <!-- Firebase Logic & SPA Module -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, getDocs, addDoc, deleteDoc, updateDoc, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, deleteDoc, updateDoc, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        // Firebase Setup
         const firebaseConfig = {
             apiKey: "AIzaSyBTF9qOouM1d6SwfBqI0n7ytQRr5ROEj0k",
             authDomain: "khati-khabar.firebaseapp.com",
@@ -808,49 +673,85 @@
             messagingSenderId: "935147333240",
             appId: "1:935147333240:web:bc0cd8a370d22ee678ef8d"
         };
-
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
+        // Global State variables
         let currentViewOrderId = null;
         let currentEditProductId = null;
         let categories = []; 
         let allProductsList = []; 
-        let cart = []; 
+        let allOrdersList = [];
+        let currentOrderTab = 'new'; 
 
-        // Default public content fallbacks
-        const defaultPublicContent = {
-            heroTitle: "প্রকৃতির আসল স্বাদ,",
-            heroHighlight: "সরাসরি আপনার টেবিলে",
-            heroSubtitle: "ভেজালমুক্ত খাঁটি মধু, গাওয়া ঘি, গুড় এবং অর্গানিক সুপারফুড। আপনার পরিবারের স্বাস্থ্য সুরক্ষায় আমরা অঙ্গীকারবদ্ধ।",
-            heroImgUrl: "https://images.unsplash.com/photo-1587049352847-4d4b1a41bb98?q=80&w=800&auto=format&fit=crop",
-            contactPhone: "০১৭০০-০০০০০০",
-            footerAbout: "প্রকৃতির খাঁটি স্বাদ, পৌঁছে যাবে আপনার দুয়ারে। সেরা মানের পণ্য দিয়ে আপনাদের সেবা করাই আমাদের মূল লক্ষ্য।",
-            footerAddress: "মিরপুর ১০, ঢাকা, বাংলাদেশ",
-            footerEmail: "info@anowarmartbd.com"
+        // E-commerce Status Configuration
+        const orderStatuses = [
+            { id: 'new', label: 'New', color: 'blue', action: 'Verify Order', next: 'verification' },
+            { id: 'verification', label: 'Verification', color: 'yellow', action: 'Confirm Order', next: 'confirmed' },
+            { id: 'confirmed', label: 'Confirmed', color: 'indigo', action: 'Start Processing', next: 'processing' },
+            { id: 'processing', label: 'Processing', color: 'purple', action: 'Start Picking', next: 'picking' },
+            { id: 'picking', label: 'Picking', color: 'orange', action: 'Send to QC', next: 'qc' },
+            { id: 'qc', label: 'QC', color: 'teal', action: 'Approve QC', next: 'packing' },
+            { id: 'packing', label: 'Packing', color: 'pink', action: 'Mark Packed', next: 'packed' },
+            { id: 'packed', label: 'Packed', color: 'emerald', action: 'Ship Order', next: 'shipped' },
+            { id: 'shipped', label: 'Shipped', color: 'cyan', action: 'Mark Delivered', next: 'delivered' },
+            { id: 'delivered', label: 'Delivered', color: 'green', action: null, next: null },
+            { id: 'cancelled', label: 'Cancelled', color: 'red', action: null, next: null },
+            { id: 'returned', label: 'Returned', color: 'gray', action: null, next: null }
+        ];
+
+        // Color mapping helper for Tailwind classes
+        const getStatusColors = (colorName) => {
+            const map = {
+                'blue': { bg: 'bg-blue-100', text: 'text-blue-700', border: 'border-blue-200', fill: 'bg-blue-500' },
+                'yellow': { bg: 'bg-amber-100', text: 'text-amber-700', border: 'border-amber-200', fill: 'bg-amber-500' },
+                'indigo': { bg: 'bg-indigo-100', text: 'text-indigo-700', border: 'border-indigo-200', fill: 'bg-indigo-500' },
+                'purple': { bg: 'bg-purple-100', text: 'text-purple-700', border: 'border-purple-200', fill: 'bg-purple-500' },
+                'orange': { bg: 'bg-orange-100', text: 'text-orange-700', border: 'border-orange-200', fill: 'bg-orange-500' },
+                'teal': { bg: 'bg-teal-100', text: 'text-teal-700', border: 'border-teal-200', fill: 'bg-teal-500' },
+                'pink': { bg: 'bg-pink-100', text: 'text-pink-700', border: 'border-pink-200', fill: 'bg-pink-500' },
+                'emerald': { bg: 'bg-emerald-100', text: 'text-emerald-700', border: 'border-emerald-200', fill: 'bg-emerald-500' },
+                'cyan': { bg: 'bg-cyan-100', text: 'text-cyan-700', border: 'border-cyan-200', fill: 'bg-cyan-500' },
+                'green': { bg: 'bg-green-100', text: 'text-green-700', border: 'border-green-200', fill: 'bg-green-500' },
+                'red': { bg: 'bg-red-100', text: 'text-red-700', border: 'border-red-200', fill: 'bg-red-500' },
+                'gray': { bg: 'bg-gray-100', text: 'text-gray-700', border: 'border-gray-200', fill: 'bg-gray-500' }
+            };
+            return map[colorName] || map['gray'];
         };
 
-        // --- Single Page App / History API Logic ---
-        window.switchTab = function(tabName, skipHistory = false) {
-            if (!skipHistory) {
-                window.history.pushState({ tab: tabName }, '', '#' + tabName);
-            }
+        // Date Formatter Helper
+        const formatDate = (isoString) => {
+            if (!isoString) return '---';
+            const d = new Date(isoString);
+            if (isNaN(d.getTime())) return isoString; // fallback
+            return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        };
+        const isToday = (dateString) => {
+            const date = new Date(dateString);
+            const today = new Date();
+            return date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear();
+        };
+        const isThisMonth = (dateString) => {
+            const date = new Date(dateString);
+            const today = new Date();
+            return date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear();
+        };
+        const currency = (val) => new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(val);
 
-            document.querySelectorAll('.page-section').forEach(el => {
-                el.classList.add('hidden');
-                el.classList.remove('block');
-            });
-            
+        /* ======================== SPA Navigation Logic ======================== */
+        window.switchTab = function(tabName, skipHistory = false) {
+            if (!skipHistory) window.history.pushState({ tab: tabName }, '', '#' + tabName);
+
+            document.querySelectorAll('.page-section').forEach(el => { el.classList.add('hidden'); el.classList.remove('block'); });
             const target = document.getElementById('section-' + tabName);
-            if(target) {
-                target.classList.remove('hidden');
-                target.classList.add('block');
-            }
+            if(target) { target.classList.remove('hidden'); target.classList.add('block'); }
 
             document.querySelectorAll('.nav-link').forEach(el => {
-                el.classList.remove('bg-primary', 'text-white');
-                el.classList.add('text-gray-400', 'hover:bg-gray-800');
+                if(el.getAttribute('target') !== '_blank') {
+                    el.classList.remove('bg-primary', 'text-white');
+                    el.classList.add('text-gray-400', 'hover:bg-gray-800');
+                }
             });
 
             const activeNav = document.getElementById('nav-' + tabName);
@@ -860,166 +761,53 @@
             }
 
             document.querySelectorAll('.mobile-nav-link').forEach(el => {
-                el.classList.remove('text-primary');
-                el.classList.add('text-gray-400');
-                if(el.getAttribute('data-tab') === tabName) {
-                    el.classList.add('text-primary');
-                    el.classList.remove('text-gray-400');
+                if(el.getAttribute('target') !== '_blank') {
+                    el.classList.remove('text-primary'); el.classList.add('text-gray-400');
+                    if(el.getAttribute('data-tab') === tabName) { el.classList.add('text-primary'); el.classList.remove('text-gray-400'); }
                 }
             });
-
-            const adminHeader = document.getElementById('admin-main-header');
-            const paddingWrapper = document.getElementById('admin-padding-wrapper');
-            
-            if(tabName === 'public') {
-                adminHeader.classList.add('hidden');
-                paddingWrapper.classList.remove('p-4', 'md:p-6');
-                paddingWrapper.classList.add('p-0');
-                document.getElementById('main-scroll-area').scrollTo(0,0);
-            } else {
-                adminHeader.classList.remove('hidden');
-                paddingWrapper.classList.add('p-4', 'md:p-6');
-                paddingWrapper.classList.remove('p-0');
-            }
 
             let title = "ড্যাশবোর্ড ওভারভিউ";
             if(tabName === 'products') title = "পণ্য পরিচালনা";
             if(tabName === 'orders') title = "অর্ডার ম্যানেজমেন্ট";
             if(tabName === 'customers') title = "গ্রাহক পরিচালনা";
+            if(tabName === 'public-page') title = "পাবলিক পেইজ এডিটর";
             document.getElementById('header-title').innerText = title;
         }
 
         window.addEventListener('popstate', (e) => {
-            if (e.state && e.state.tab) {
-                window.switchTab(e.state.tab, true);
-            } else {
-                const hash = window.location.hash.replace('#', '');
-                window.switchTab(hash || 'dashboard', true);
-            }
+            const hash = window.location.hash.replace('#', '');
+            window.switchTab(e.state?.tab || hash || 'dashboard', true);
         });
 
+        /* ======================== UI Helpers ======================== */
         window.showNotification = function(message, isError = false) {
             const toast = document.getElementById('toast');
-            const toastMsg = document.getElementById('toast-message');
-            const toastIcon = document.getElementById('toast-icon-container');
-            toastMsg.textContent = message;
-            toastIcon.className = isError ? "p-1 rounded-full bg-red-500 text-white flex-shrink-0" : "p-1 rounded-full bg-emerald-500 text-white flex-shrink-0";
+            document.getElementById('toast-message').textContent = message;
+            document.getElementById('toast-icon-container').className = isError ? "p-1 rounded-full bg-red-500 text-white flex-shrink-0" : "p-1 rounded-full bg-emerald-500 text-white flex-shrink-0";
             toast.classList.remove('opacity-0', 'pointer-events-none');
             toast.classList.add('opacity-100');
-            setTimeout(() => {
-                toast.classList.remove('opacity-100');
-                toast.classList.add('opacity-0', 'pointer-events-none');
-            }, 3000);
+            setTimeout(() => { toast.classList.remove('opacity-100'); toast.classList.add('opacity-0', 'pointer-events-none'); }, 3000);
         }
 
-        window.openModal = function(id) {
-            document.getElementById(id).classList.remove('hidden');
-            document.getElementById(id).classList.add('flex');
-            
-            // Populate frontend data to edit modal inputs when opening
-            if(id === 'edit-frontend-modal') {
-                document.getElementById('edit-hero-title').value = document.getElementById('public-hero-title').innerText;
-                document.getElementById('edit-hero-highlight').value = document.getElementById('public-hero-highlight').innerText;
-                document.getElementById('edit-hero-subtitle').value = document.getElementById('public-hero-subtitle').innerText;
-                document.getElementById('edit-hero-img').value = document.getElementById('public-hero-img').src;
-                document.getElementById('edit-contact-phone').value = document.getElementById('public-contact-phone').innerText;
-                document.getElementById('edit-footer-about').value = document.getElementById('public-footer-about').innerText;
-                document.getElementById('edit-footer-address').value = document.getElementById('public-footer-address').innerText;
-                document.getElementById('edit-footer-email').value = document.getElementById('public-footer-email').innerText;
-            }
+        window.confirmAction = function(title, desc, callback) {
+            document.getElementById('confirm-modal-title').innerText = title;
+            document.getElementById('confirm-modal-desc').innerText = desc;
+            const modal = document.getElementById('custom-confirm-modal');
+            modal.classList.remove('hidden'); modal.classList.add('flex');
+            document.getElementById('confirm-modal-btn').onclick = function() { window.closeConfirmModal(); callback(); };
         }
-
-        window.closeModal = function(id) {
-            document.getElementById(id).classList.add('hidden');
-            document.getElementById(id).classList.remove('flex');
+        window.closeConfirmModal = () => { document.getElementById('custom-confirm-modal').classList.replace('flex', 'hidden'); }
+        window.openModal = (id) => { document.getElementById(id).classList.replace('hidden', 'flex'); }
+        window.closeModal = (id) => { 
+            document.getElementById(id).classList.replace('flex', 'hidden');
             currentViewOrderId = null;
             if (id === 'add-product-modal') currentEditProductId = null; 
         }
 
-        // ================= SETTINGS & CMS MANAGEMENT =================
-        function loadSettingsAndCMS() {
-            // Load Logo Settings
-            onSnapshot(doc(db, "settings", "general"), (documentSnapshot) => {
-                if (documentSnapshot.exists()) {
-                    const data = documentSnapshot.data();
-                    if (data.logoUrl) {
-                        document.getElementById('setting-logo-url').value = data.logoUrl;
-                        document.querySelectorAll('.brand-logo').forEach(img => {
-                            img.src = data.logoUrl;
-                            img.classList.remove('hidden');
-                        });
-                        document.querySelectorAll('.brand-initial').forEach(el => {
-                            el.classList.add('hidden');
-                        });
-                    } else {
-                        hideLogos();
-                    }
-                } else {
-                    hideLogos();
-                }
-            });
-
-            // Load Frontend Content
-            onSnapshot(doc(db, "settings", "frontend"), (documentSnapshot) => {
-                let data = defaultPublicContent;
-                if (documentSnapshot.exists()) {
-                    data = { ...defaultPublicContent, ...documentSnapshot.data() };
-                } 
-                
-                // Update DOM elements on public page
-                if(document.getElementById('public-hero-title')) document.getElementById('public-hero-title').innerText = data.heroTitle;
-                if(document.getElementById('public-hero-highlight')) document.getElementById('public-hero-highlight').innerText = data.heroHighlight;
-                if(document.getElementById('public-hero-subtitle')) document.getElementById('public-hero-subtitle').innerText = data.heroSubtitle;
-                if(document.getElementById('public-hero-img')) document.getElementById('public-hero-img').src = data.heroImgUrl;
-                if(document.getElementById('public-contact-phone')) document.getElementById('public-contact-phone').innerText = data.contactPhone;
-                if(document.getElementById('public-call-btn')) document.getElementById('public-call-btn').href = `tel:${data.contactPhone}`;
-                if(document.getElementById('public-footer-about')) document.getElementById('public-footer-about').innerText = data.footerAbout;
-                if(document.getElementById('public-footer-address')) document.getElementById('public-footer-address').innerText = data.footerAddress;
-                if(document.getElementById('public-footer-email')) document.getElementById('public-footer-email').innerText = data.footerEmail;
-            });
-        }
-        
-        function hideLogos(){
-            document.querySelectorAll('.brand-logo').forEach(img => img.classList.add('hidden'));
-            document.querySelectorAll('.brand-initial').forEach(el => el.classList.remove('hidden'));
-        }
-
-        window.saveSettings = async function() {
-            if(!auth.currentUser) return window.showNotification("আপনাকে লগইন করতে হবে", true);
-            const logoUrl = document.getElementById('setting-logo-url').value.trim();
-            try {
-                await setDoc(doc(db, "settings", "general"), { logoUrl: logoUrl }, { merge: true });
-                window.showNotification("লোগো সেভ করা হয়েছে!");
-                window.closeModal('settings-modal');
-            } catch (error) { window.showNotification("সমস্যা হয়েছে", true); }
-        }
-
-        // Save CMS Content 
-        window.saveFrontendSettings = async function() {
-            if(!auth.currentUser) return window.showNotification("আপনাকে লগইন করতে হবে", true);
-            
-            const dataToSave = {
-                heroTitle: document.getElementById('edit-hero-title').value.trim() || defaultPublicContent.heroTitle,
-                heroHighlight: document.getElementById('edit-hero-highlight').value.trim() || defaultPublicContent.heroHighlight,
-                heroSubtitle: document.getElementById('edit-hero-subtitle').value.trim() || defaultPublicContent.heroSubtitle,
-                heroImgUrl: document.getElementById('edit-hero-img').value.trim() || defaultPublicContent.heroImgUrl,
-                contactPhone: document.getElementById('edit-contact-phone').value.trim() || defaultPublicContent.contactPhone,
-                footerAbout: document.getElementById('edit-footer-about').value.trim() || defaultPublicContent.footerAbout,
-                footerAddress: document.getElementById('edit-footer-address').value.trim() || defaultPublicContent.footerAddress,
-                footerEmail: document.getElementById('edit-footer-email').value.trim() || defaultPublicContent.footerEmail,
-            };
-
-            try {
-                await setDoc(doc(db, "settings", "frontend"), dataToSave, { merge: true });
-                window.showNotification("পাবলিক পেইজের তথ্য আপডেট হয়েছে!");
-                window.closeModal('edit-frontend-modal');
-            } catch(error) { window.showNotification("আপডেট করতে সমস্যা হয়েছে।", true); }
-        }
-
-        // Authentication & Init
+        /* ======================== Load Data & Listeners ======================== */
         onAuthStateChanged(auth, (user) => {
             setTimeout(() => { document.getElementById('global-loader').classList.add('hidden'); }, 500);
-
             if (user) {
                 document.getElementById('login-view').classList.add('hidden');
                 document.getElementById('dashboard-view').classList.remove('hidden');
@@ -1034,7 +822,6 @@
 
                 const initialTab = window.location.hash.replace('#', '') || 'dashboard';
                 window.switchTab(initialTab, true);
-                
             } else {
                 document.getElementById('login-view').classList.remove('hidden');
                 document.getElementById('dashboard-view').classList.add('hidden');
@@ -1043,19 +830,560 @@
             }
         });
 
-        // ================= CATEGORY MANAGEMENT =================
-        document.getElementById('product-category').addEventListener('change', function(e) {
-            const val = e.target.value;
-            const delBtn = document.getElementById('delete-category-btn');
+        // Orders Data & Dashboard Analytics
+        function loadOrdersData() {
+            onSnapshot(collection(db, "orders"), (snapshot) => {
+                allOrdersList = [];
+                let statCounts = { 
+                    todayOrders: 0, todayRevenue: 0, monthRevenue: 0, totalOrders: snapshot.docs.length,
+                    pendingVerif: 0, processing: 0, packing: 0, shippedToday: 0, deliveredAll: 0, cancelled: 0
+                };
+                let statusCounts = {};
+                orderStatuses.forEach(s => statusCounts[s.id] = 0);
+
+                snapshot.forEach(docSnap => {
+                    const data = docSnap.data();
+                    data.id = docSnap.id;
+                    // Normalize legacy statuses
+                    if(data.status === 'Pending' || data.status === 'pending') data.status = 'new';
+                    if(data.status === 'completed' || data.status === 'Completed') data.status = 'delivered';
+                    if(!data.status) data.status = 'new';
+                    
+                    allOrdersList.push(data);
+                    
+                    // Count for tabs
+                    if(statusCounts[data.status] !== undefined) statusCounts[data.status]++;
+                    
+                    // Analytics
+                    const dateCreated = data.createdAt || data.date;
+                    const amount = Number(data.totalPrice) || 0;
+                    const isValidRevenue = !['cancelled', 'returned'].includes(data.status);
+
+                    if (dateCreated && isToday(dateCreated)) {
+                        statCounts.todayOrders++;
+                        if(isValidRevenue) statCounts.todayRevenue += amount;
+                    }
+                    if (dateCreated && isThisMonth(dateCreated)) {
+                        if(isValidRevenue) statCounts.monthRevenue += amount;
+                    }
+
+                    if(data.status === 'verification') statCounts.pendingVerif++;
+                    if(data.status === 'processing') statCounts.processing++;
+                    if(data.status === 'packing') statCounts.packing++;
+                    if(data.status === 'delivered') statCounts.deliveredAll++;
+                    if(data.status === 'cancelled') statCounts.cancelled++;
+                    if(data.status === 'shipped' && data.shippedAt && isToday(data.shippedAt)) statCounts.shippedToday++;
+                });
+
+                // Sort newest first
+                allOrdersList.sort((a,b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+
+                // Update Analytics Dashboard UI
+                document.getElementById('stat-total-orders').innerText = currency(statCounts.totalOrders);
+                document.getElementById('stat-today-orders').innerText = currency(statCounts.todayOrders);
+                document.getElementById('stat-today-revenue').innerText = currency(statCounts.todayRevenue);
+                document.getElementById('stat-month-revenue').innerText = currency(statCounts.monthRevenue);
+                document.getElementById('stat-pending-verification').innerText = statCounts.pendingVerif;
+                document.getElementById('stat-in-processing').innerText = statCounts.processing;
+                document.getElementById('stat-in-packing').innerText = statCounts.packing;
+                document.getElementById('stat-shipped-today').innerText = statCounts.shippedToday;
+                document.getElementById('stat-delivered-orders').innerText = statCounts.deliveredAll;
+                document.getElementById('stat-cancelled-orders').innerText = statCounts.cancelled;
+
+                renderOrderTabs(statusCounts);
+                renderOrdersTable();
+            });
+        }
+
+        function renderOrderTabs(statusCounts) {
+            const container = document.getElementById('order-tabs-container');
+            container.innerHTML = '';
+            orderStatuses.forEach(status => {
+                const count = statusCounts[status.id] || 0;
+                const isActive = currentOrderTab === status.id;
+                const colors = getStatusColors(status.color);
+                
+                const btnClass = isActive 
+                    ? `${colors.bg} ${colors.text} shadow-sm border border-transparent font-bold`
+                    : `bg-white text-gray-500 hover:bg-gray-50 border border-gray-200 font-medium`;
+
+                const badgeClass = isActive
+                    ? `${colors.fill} text-white`
+                    : `bg-gray-200 text-gray-600`;
+
+                container.innerHTML += `
+                    <button onclick="window.selectOrderTab('${status.id}')" class="whitespace-nowrap px-4 py-2 rounded-lg text-sm transition-all flex items-center gap-2 ${btnClass}">
+                        ${status.label}
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${badgeClass}">${count}</span>
+                    </button>
+                `;
+            });
+        }
+
+        window.selectOrderTab = function(tabId) {
+            currentOrderTab = tabId;
+            const currentStatusObj = orderStatuses.find(s => s.id === tabId);
+            document.getElementById('current-tab-title').innerText = currentStatusObj ? `${currentStatusObj.label} Orders` : 'Orders';
             
-            if (val === 'new') {
-                document.getElementById('new-category-input-container').classList.remove('hidden');
-                delBtn.classList.add('hidden');
+            // Re-render tabs to update active state
+            let statusCounts = {}; orderStatuses.forEach(s => statusCounts[s.id] = 0);
+            allOrdersList.forEach(o => { if(statusCounts[o.status] !== undefined) statusCounts[o.status]++; });
+            renderOrderTabs(statusCounts);
+            
+            renderOrdersTable();
+        }
+
+        function renderOrdersTable() {
+            const tbody = document.getElementById('orders-unified-table-body');
+            const noMsg = document.getElementById('no-orders-msg');
+            tbody.innerHTML = '';
+            
+            const filteredOrders = allOrdersList.filter(o => o.status === currentOrderTab);
+            
+            if (filteredOrders.length === 0) {
+                tbody.parentNode.classList.add('hidden');
+                noMsg.classList.remove('hidden');
+                return;
             } else {
-                document.getElementById('new-category-input-container').classList.add('hidden');
-                if (val && categories.some(c => c.name === val)) delBtn.classList.remove('hidden');
-                else delBtn.classList.add('hidden');
+                tbody.parentNode.classList.remove('hidden');
+                noMsg.classList.add('hidden');
             }
+
+            filteredOrders.forEach(data => {
+                const statusObj = orderStatuses.find(s => s.id === data.status) || orderStatuses[0];
+                const c = getStatusColors(statusObj.color);
+                const dateShow = formatDate(data.createdAt || data.date).split(',')[0];
+
+                tbody.innerHTML += `
+                    <tr class="mobile-card-row bg-white block md:table-row md:border-b border-gray-100 hover:bg-gray-50 transition-colors cursor-pointer md:rounded-none md:shadow-none" onclick="window.viewOrderFullDetail('${data.id}')">
+                        <td class="block md:table-cell p-3 md:p-4 border-b border-gray-50 md:border-none">
+                            <div class="flex justify-between md:block items-center">
+                                <span class="font-mono font-bold text-gray-700 block">#${data.id.substring(0, 6).toUpperCase()}</span>
+                                <span class="text-xs text-gray-500">${dateShow}</span>
+                            </div>
+                        </td>
+                        <td class="block md:table-cell p-3 md:p-4 border-b border-gray-50 md:border-none">
+                            <div class="flex justify-between md:block items-center">
+                                <div class="text-sm font-bold text-gray-800">${data.customerName || 'ক্রেতা'}</div>
+                                <div class="text-xs text-gray-500">${data.customerPhone || ''}</div>
+                            </div>
+                        </td>
+                        <td class="block md:table-cell p-3 md:p-4 border-b border-gray-50 md:border-none">
+                            <div class="flex justify-between md:block items-center">
+                                <span class="md:hidden text-xs text-gray-500 font-bold">মোট বিল:</span>
+                                <span class="font-bold text-primary">৳ ${currency(data.totalPrice || 0)}</span>
+                            </div>
+                        </td>
+                        <td class="block md:table-cell p-3 md:p-4 border-b border-gray-50 md:border-none">
+                            <div class="flex justify-between md:block items-center">
+                                <span class="md:hidden text-xs text-gray-500 font-bold">স্ট্যাটাস:</span>
+                                <span class="${c.bg} ${c.text} border ${c.border} px-3 py-1 rounded-full text-[10px] uppercase font-bold tracking-wider">${statusObj.label}</span>
+                            </div>
+                        </td>
+                        <td class="block md:table-cell p-3 md:p-4 text-right">
+                            <button class="text-gray-500 hover:text-primary transition-colors flex items-center justify-end gap-1 w-full md:w-auto text-sm font-medium">
+                                Details
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        /* ======================== Order Modal & Timeline Logic ======================== */
+        window.viewOrderFullDetail = function(id) {
+            currentViewOrderId = id;
+            const order = allOrdersList.find(o => o.id === id);
+            if(!order) return;
+
+            document.getElementById('modal-order-id').innerText = `ID: #${id.toUpperCase()}`;
+            document.getElementById('modal-order-date').innerText = `Date: ${formatDate(order.createdAt || order.date)}`;
+            
+            // Customer Info
+            document.getElementById('modal-customer-name').innerText = order.customerName || 'N/A';
+            document.getElementById('modal-customer-phone').innerText = order.customerPhone || 'N/A';
+            document.getElementById('modal-customer-address').innerText = order.customerAddress || 'N/A';
+
+            // Shipping Info
+            document.getElementById('modal-courier-name').value = order.courierName || '';
+            document.getElementById('modal-courier-phone').value = order.courierPhone || '';
+            document.getElementById('modal-tracking').value = order.trackingNumber || '';
+            document.getElementById('modal-admin-note').value = order.adminNote || '';
+
+            // Products
+            const itemsBody = document.getElementById('modal-order-items');
+            itemsBody.innerHTML = '';
+            let totalCalc = 0;
+            if(order.items && Array.isArray(order.items)) {
+                order.items.forEach(item => {
+                    const lineTotal = (item.price || 0) * (item.quantity || 1);
+                    totalCalc += lineTotal;
+                    itemsBody.innerHTML += `
+                        <tr>
+                            <td class="p-3"><p class="font-medium text-gray-800 line-clamp-2">${item.name}</p></td>
+                            <td class="p-3 text-center font-medium">${item.quantity || 1}</td>
+                            <td class="p-3 text-right text-gray-500">৳ ${currency(item.price || 0)}</td>
+                            <td class="p-3 text-right font-bold text-gray-800">৳ ${currency(lineTotal)}</td>
+                        </tr>
+                    `;
+                });
+            }
+            document.getElementById('modal-total-price').innerText = `৳ ${currency(order.totalPrice || totalCalc)}`;
+
+            // Build Timeline & Action Buttons
+            buildOrderTimeline(order);
+            
+            window.openModal('view-order-modal');
+        }
+
+        function buildOrderTimeline(order) {
+            const container = document.getElementById('modal-timeline-container');
+            container.innerHTML = '';
+            
+            // Filter out cancelled/returned from primary flow
+            const flowSteps = orderStatuses.filter(s => !['cancelled', 'returned'].includes(s.id));
+            const currentStatusIndex = flowSteps.findIndex(s => s.id === order.status);
+            const isAborted = ['cancelled', 'returned'].includes(order.status);
+            const actualStatusObj = orderStatuses.find(s => s.id === order.status) || orderStatuses[0];
+            const activeColors = getStatusColors(actualStatusObj.color);
+
+            // Update Header Badge
+            const headerBadge = document.getElementById('modal-status-badge');
+            headerBadge.innerText = actualStatusObj.label;
+            headerBadge.className = `ml-2 text-xs px-2 py-1 rounded-full uppercase tracking-wider font-bold border ${activeColors.bg} ${activeColors.text} ${activeColors.border}`;
+
+            if(isAborted) {
+                container.innerHTML = `
+                    <div class="flex items-center text-red-600 font-bold bg-red-50 px-4 py-2 rounded-lg border border-red-200">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Order was ${actualStatusObj.label} on ${formatDate(order.statusUpdatedAt)}
+                    </div>`;
+            } else {
+                flowSteps.forEach((step, index) => {
+                    const isCompleted = index < currentStatusIndex;
+                    const isCurrent = index === currentStatusIndex;
+                    const timestampField = step.id + 'At'; // e.g. confirmedAt
+                    const timeInfo = order[timestampField] ? `<div class="text-[9px] mt-1 text-gray-400 font-mono">${formatDate(order[timestampField]).split(',')[0]}</div>` : '';
+
+                    let dotClass = "w-4 h-4 rounded-full bg-gray-200 border-2 border-white shadow-sm shrink-0 z-10";
+                    let textClass = "text-gray-400 font-medium";
+                    let lineClass = "h-0.5 w-8 md:w-12 bg-gray-200 shrink-0"; // line after dot
+
+                    if (isCompleted) {
+                        dotClass = `w-4 h-4 rounded-full bg-emerald-500 border-2 border-white shadow-sm shrink-0 z-10`;
+                        textClass = "text-emerald-600 font-bold";
+                        lineClass = "h-0.5 w-8 md:w-12 bg-emerald-500 shrink-0";
+                    } else if (isCurrent) {
+                        dotClass = `w-4 h-4 rounded-full ${activeColors.fill} border-2 border-white shadow-sm shrink-0 z-10 ring-4 ring-opacity-30 ${activeColors.text.replace('text', 'ring')}`;
+                        textClass = `${activeColors.text} font-bold`;
+                    }
+
+                    // Render Step
+                    container.innerHTML += `
+                        <div class="flex flex-col items-center justify-start text-center min-w-[70px]">
+                            <div class="${dotClass}"></div>
+                            <div class="mt-2 text-[10px] md:text-xs uppercase tracking-tight ${textClass}">${step.label}</div>
+                            ${timeInfo}
+                        </div>
+                    `;
+                    // Render connecting line (if not last)
+                    if (index < flowSteps.length - 1) {
+                        container.innerHTML += `<div class="${lineClass} -mt-6 mx-1"></div>`;
+                    }
+                });
+            }
+
+            // Update Action Buttons
+            const btnPrimary = document.getElementById('btn-primary-action');
+            const btnCancel = document.getElementById('btn-cancel-order');
+            
+            if (isAborted || order.status === 'delivered') {
+                btnPrimary.classList.add('hidden');
+                btnCancel.classList.add('hidden');
+            } else {
+                btnCancel.classList.remove('hidden');
+                const nextAction = actualStatusObj.action;
+                const nextStatusId = actualStatusObj.next;
+                
+                if(nextAction && nextStatusId) {
+                    btnPrimary.classList.remove('hidden');
+                    btnPrimary.innerText = nextAction;
+                    btnPrimary.onclick = () => window.updateStatus(nextStatusId);
+                } else {
+                    btnPrimary.classList.add('hidden');
+                }
+            }
+        }
+
+        window.updateStatus = async function(newStatusId) {
+            if(!auth.currentUser) return;
+            if(!currentViewOrderId) return;
+
+            const order = allOrdersList.find(o => o.id === currentViewOrderId);
+            if(!order) return;
+
+            const newStatusObj = orderStatuses.find(s => s.id === newStatusId);
+
+            // Validation for packing->shipped (require tracking info)
+            const courierName = document.getElementById('modal-courier-name').value.trim();
+            const trackingNo = document.getElementById('modal-tracking').value.trim();
+            if (newStatusId === 'shipped') {
+                if(!courierName || !trackingNo) {
+                    return window.showNotification("Shipping info (Courier & Tracking) is required to ship!", true);
+                }
+            }
+
+            window.confirmAction(`Confirm Action`, `Are you sure you want to mark this order as ${newStatusObj.label}?`, async () => {
+                const nowIso = new Date().toISOString();
+                const updateData = {
+                    status: newStatusId,
+                    statusUpdatedAt: nowIso,
+                    [`${newStatusId}At`]: nowIso,
+                    adminNote: document.getElementById('modal-admin-note').value.trim(),
+                    courierName: courierName,
+                    courierPhone: document.getElementById('modal-courier-phone').value.trim(),
+                    trackingNumber: trackingNo
+                };
+
+                try {
+                    await updateDoc(doc(db, "orders", currentViewOrderId), updateData);
+                    window.showNotification(`Order ${newStatusObj.label} Successfully!`);
+                    window.closeModal('view-order-modal');
+                } catch(e) {
+                    window.showNotification("Error updating status", true);
+                }
+            });
+        }
+
+        // Packing Slip Generator
+        window.printPackingSlip = function() {
+            if(!currentViewOrderId) return;
+            const order = allOrdersList.find(o => o.id === currentViewOrderId);
+            if(!order) return;
+            
+            let itemsHtml = '';
+            let sl = 1;
+            if(order.items) {
+                order.items.forEach(item => {
+                    itemsHtml += `
+                        <tr style="border-bottom:1px solid #eee;">
+                            <td style="padding:8px; text-align:center;">${sl++}</td>
+                            <td style="padding:8px;">${item.name}</td>
+                            <td style="padding:8px; text-align:center;">${item.quantity || 1}</td>
+                            <td style="padding:8px; text-align:right;">৳${item.price || 0}</td>
+                            <td style="padding:8px; text-align:right;">৳${(item.price||0)*(item.quantity||1)}</td>
+                        </tr>
+                    `;
+                });
+            }
+
+            const html = `
+                <html>
+                <head>
+                    <title>Packing Slip - #${order.id.substring(0,6).toUpperCase()}</title>
+                    <style>
+                        body { font-family: sans-serif; color:#333; padding: 20px; font-size: 14px; }
+                        .header { display: flex; justify-content: space-between; border-bottom: 2px solid #166534; padding-bottom: 10px; margin-bottom: 20px;}
+                        .title { font-size: 24px; font-weight: bold; color: #166534; margin:0;}
+                        .info-box { border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-bottom: 20px; width:48%; }
+                        .flex-row { display: flex; justify-content: space-between; }
+                        table { width: 100%; border-collapse: collapse; margin-bottom: 20px;}
+                        th { background: #f9fafb; padding: 10px; text-align: left; border-bottom: 2px solid #ddd;}
+                        .footer { text-align: center; margin-top: 40px; font-size: 12px; color: #777;}
+                    </style>
+                </head>
+                <body onload="window.print(); window.close();">
+                    <div class="header">
+                        <div>
+                            <h1 class="title">Naisargik</h1>
+                            <p style="margin:5px 0 0 0;">Packing Slip / Invoice</p>
+                        </div>
+                        <div style="text-align:right;">
+                            <strong>Order ID:</strong> #${order.id.toUpperCase()}<br>
+                            <strong>Date:</strong> ${formatDate(order.createdAt || order.date)}
+                        </div>
+                    </div>
+                    
+                    <div class="flex-row">
+                        <div class="info-box">
+                            <h3 style="margin-top:0; border-bottom:1px solid #eee; padding-bottom:5px;">Ship To:</h3>
+                            <strong>${order.customerName || 'N/A'}</strong><br>
+                            Phone: ${order.customerPhone || 'N/A'}<br>
+                            Address: ${order.customerAddress || 'N/A'}
+                        </div>
+                        <div class="info-box">
+                            <h3 style="margin-top:0; border-bottom:1px solid #eee; padding-bottom:5px;">Shipping Details:</h3>
+                            Courier: ${order.courierName || 'Pending'}<br>
+                            Tracking ID: ${order.trackingNumber || 'Pending'}<br>
+                            Payment Status: COD
+                        </div>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="text-align:center; width:50px;">SL</th>
+                                <th>Item Description</th>
+                                <th style="text-align:center;">Qty</th>
+                                <th style="text-align:right;">Price</th>
+                                <th style="text-align:right;">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>${itemsHtml}</tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4" style="text-align:right; padding:10px; font-weight:bold;">Total Amount:</td>
+                                <td style="text-align:right; padding:10px; font-weight:bold; font-size:16px;">৳${currency(order.totalPrice || 0)}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    
+                    <div class="footer">
+                        Thank you for shopping with Naisargik!<br>
+                        Visit us at www.naisargik.com
+                    </div>
+                </body>
+                </html>
+            `;
+            const win = window.open('', '_blank');
+            win.document.write(html);
+            win.document.close();
+        }
+
+        /* ======================== Products & Customers Modules ======================== */
+        function loadProductsData() {
+            onSnapshot(collection(db, "products"), (snapshot) => {
+                document.getElementById('total-products-count').innerText = snapshot.docs.length;
+                allProductsList = [];
+                const tableBody = document.getElementById('products-table-body');
+                tableBody.innerHTML = '';
+                snapshot.forEach(docSnap => {
+                    const data = docSnap.data();
+                    data.id = docSnap.id;
+                    allProductsList.push(data);
+                    
+                    const stockClass = data.stockStatus === 'In Stock' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700';
+                    tableBody.innerHTML += `
+                        <tr class="mobile-card-row bg-white block md:table-row md:border-b border-gray-100 hover:bg-gray-50 transition-colors md:rounded-none md:shadow-none">
+                            <td class="block md:table-cell p-3 md:p-4 border-b border-gray-50 md:border-none">
+                                <div class="flex items-center gap-3">
+                                    <img src="${data.imageUrl || 'https://placehold.co/150x150/e2e8f0/475569?text=Image'}" class="w-12 h-12 rounded-lg object-cover border border-gray-200" alt="Product">
+                                    <div><p class="font-bold text-gray-800 line-clamp-1">${data.name}</p></div>
+                                </div>
+                            </td>
+                            <td class="block md:table-cell p-3 md:p-4 border-b border-gray-50 md:border-none">
+                                <div class="flex justify-between md:block items-center">
+                                    <span class="md:hidden text-xs text-gray-500 font-bold">ক্যাটাগরি:</span>
+                                    <span class="px-2 py-1 bg-gray-100 rounded text-xs font-medium">${data.category}</span>
+                                </div>
+                            </td>
+                            <td class="block md:table-cell p-3 md:p-4 border-b border-gray-50 md:border-none">
+                                <div class="flex justify-between md:block items-center">
+                                    <span class="md:hidden text-xs text-gray-500 font-bold">মূল্য:</span>
+                                    <div>
+                                        <span class="font-bold text-primary">৳ ${data.price}</span>
+                                        ${data.regularPrice ? `<span class="text-xs text-gray-400 line-through ml-1">৳ ${data.regularPrice}</span>` : ''}
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="block md:table-cell p-3 md:p-4 border-b border-gray-50 md:border-none text-center">
+                                <div class="flex justify-between md:flex-col md:items-center items-center">
+                                    <span class="md:hidden text-xs text-gray-500 font-bold">স্টক:</span>
+                                    <span class="px-2 py-1 ${stockClass} rounded-full text-[10px] font-bold uppercase">${data.stockStatus}</span>
+                                </div>
+                            </td>
+                            <td class="block md:table-cell p-3 md:p-4">
+                                <div class="flex gap-2 justify-end mt-2 md:mt-0">
+                                    <button onclick="window.editProduct('${data.id}')" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border border-blue-100 hover:border-blue-200"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></button>
+                                    <button onclick="window.deleteProduct('${data.id}')" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors border border-red-100 hover:border-red-200"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+            });
+        }
+
+        function loadCustomersData() {
+            onSnapshot(collection(db, "customers"), (snapshot) => {
+                document.getElementById('stat-customers-count').innerText = snapshot.docs.length;
+                const tableBody = document.getElementById('customers-table-body');
+                tableBody.innerHTML = '';
+                snapshot.forEach(docSnap => {
+                    const data = docSnap.data();
+                    tableBody.innerHTML += `
+                        <tr class="mobile-card-row bg-white block md:table-row md:border-b border-gray-100 hover:bg-gray-50 transition-colors md:rounded-none md:shadow-none">
+                            <td class="block md:table-cell p-3 md:p-4 border-b border-gray-50 md:border-none font-bold text-gray-800">
+                                <div class="flex justify-between md:block"><span class="md:hidden text-xs text-gray-500 font-bold font-normal">নাম:</span>${data.name}</div>
+                            </td>
+                            <td class="block md:table-cell p-3 md:p-4 border-b border-gray-50 md:border-none">
+                                <div class="flex justify-between md:block"><span class="md:hidden text-xs text-gray-500 font-bold font-normal">যোগাযোগ:</span>${data.phone}</div>
+                            </td>
+                            <td class="block md:table-cell p-3 md:p-4 border-b border-gray-50 md:border-none text-sm text-gray-600">
+                                <div class="flex justify-between md:block"><span class="md:hidden text-xs text-gray-500 font-bold font-normal">ঠিকানা:</span><span class="line-clamp-2">${data.address}</span></div>
+                            </td>
+                            <td class="block md:table-cell p-3 md:p-4 text-right">
+                                <button class="mt-2 md:mt-0 text-red-500 hover:bg-red-50 px-3 py-1.5 rounded text-sm transition-colors w-full md:w-auto border border-red-100" onclick="window.deleteCustomer('${docSnap.id}')">মুছুন</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            });
+        }
+
+        /* ======================== Settings & Form Logic ======================== */
+        function loadSettingsAndCMS() {
+            onSnapshot(doc(db, "settings", "general"), (documentSnapshot) => {
+                if (documentSnapshot.exists()) {
+                    const data = documentSnapshot.data();
+                    if (data.logoUrl) {
+                        document.getElementById('setting-logo-url').value = data.logoUrl;
+                        document.querySelectorAll('.brand-logo').forEach(img => { img.src = data.logoUrl; img.classList.remove('hidden'); });
+                        document.querySelectorAll('.brand-initial').forEach(el => { el.classList.add('hidden'); });
+                    } else hideLogos();
+                    
+                    const shopUrl = data.shopUrl || "https://www.naisargik.com";
+                    document.getElementById('setting-shop-url').value = shopUrl;
+                    document.getElementById('sidebar-shop-link').href = shopUrl;
+
+                    const editorUrl = data.editorUrl || "";
+                    document.getElementById('setting-editor-url').value = editorUrl;
+                    const editorBtn = document.getElementById('public-editor-link-btn');
+                    const noLinkMsg = document.getElementById('public-editor-no-link-msg');
+                    if (editorUrl) {
+                        editorBtn.href = editorUrl; editorBtn.classList.remove('hidden'); noLinkMsg.classList.add('hidden');
+                    } else {
+                        editorBtn.classList.add('hidden'); noLinkMsg.classList.remove('hidden');
+                    }
+                } else {
+                    hideLogos();
+                    document.getElementById('sidebar-shop-link').href = "https://www.naisargik.com";
+                }
+            });
+        }
+        function hideLogos(){
+            document.querySelectorAll('.brand-logo').forEach(img => img.classList.add('hidden'));
+            document.querySelectorAll('.brand-initial').forEach(el => el.classList.remove('hidden'));
+        }
+
+        window.saveSettings = async function() {
+            if(!auth.currentUser) return window.showNotification("আপনাকে লগইন করতে হবে", true);
+            const logoUrl = document.getElementById('setting-logo-url').value.trim();
+            const shopUrl = document.getElementById('setting-shop-url').value.trim();
+            const editorUrl = document.getElementById('setting-editor-url').value.trim();
+            try {
+                await setDoc(doc(db, "settings", "general"), { logoUrl: logoUrl, shopUrl: shopUrl, editorUrl: editorUrl }, { merge: true });
+                window.showNotification("সেটিংস সেভ করা হয়েছে!");
+                window.closeModal('settings-modal');
+            } catch (error) { window.showNotification("সমস্যা হয়েছে", true); }
+        }
+
+        /* ======================== Product Admin Logic ======================== */
+        document.getElementById('product-category').addEventListener('change', function(e) {
+            const val = e.target.value; const delBtn = document.getElementById('delete-category-btn');
+            if (val === 'new') { document.getElementById('new-category-input-container').classList.remove('hidden'); delBtn.classList.add('hidden'); } 
+            else { document.getElementById('new-category-input-container').classList.add('hidden'); if (val && categories.some(c => c.name === val)) delBtn.classList.remove('hidden'); else delBtn.classList.add('hidden'); }
         });
 
         window.saveNewCategory = async function() {
@@ -1063,40 +1391,31 @@
             const newCategoryName = document.getElementById('new-category-name').value.trim();
             if (!newCategoryName) return window.showNotification("ক্যাটাগরির নাম লিখুন", true);
             if (categories.some(c => c.name.toLowerCase() === newCategoryName.toLowerCase())) return window.showNotification("এই ক্যাটাগরিটি আগেই যুক্ত করা হয়েছে", true);
-
             try {
                 await addDoc(collection(db, "categories"), { name: newCategoryName, timestamp: new Date() });
                 window.showNotification("নতুন ক্যাটাগরি যুক্ত করা হয়েছে!");
                 document.getElementById('new-category-input-container').classList.add('hidden');
                 document.getElementById('new-category-name').value = '';
-                setTimeout(() => {
-                    document.getElementById('product-category').value = newCategoryName;
-                    document.getElementById('product-category').dispatchEvent(new Event('change'));
-                }, 500);
+                setTimeout(() => { document.getElementById('product-category').value = newCategoryName; document.getElementById('product-category').dispatchEvent(new Event('change')); }, 500);
             } catch (error) { window.showNotification("সমস্যা হয়েছে", true); }
         }
 
-        window.deleteSelectedCategory = async function() {
-            if(!auth.currentUser) return window.showNotification("আপনাকে লগইন করতে হবে", true);
+        window.deleteSelectedCategory = function() {
+            if(!auth.currentUser) return;
             const selectedName = document.getElementById('product-category').value;
             const categoryObj = categories.find(c => c.name === selectedName);
             if (!categoryObj) return;
-
-            if (confirm(`'${selectedName}' ক্যাটাগরিটি মুছে ফেলতে চান?`)) {
-                try {
-                    await deleteDoc(doc(db, "categories", categoryObj.id));
-                    window.showNotification("ক্যাটাগরি মুছে ফেলা হয়েছে!");
-                    document.getElementById('delete-category-btn').classList.add('hidden');
-                } catch (error) { window.showNotification("সমস্যা হয়েছে", true); }
-            }
+            window.confirmAction("ক্যাটাগরি মুছুন", `'${selectedName}' ক্যাটাগরিটি মুছে ফেলতে চান?`, async () => {
+                await deleteDoc(doc(db, "categories", categoryObj.id));
+                window.showNotification("ক্যাটাগরি মুছে ফেলা হয়েছে!");
+                document.getElementById('delete-category-btn').classList.add('hidden');
+            });
         }
 
         function loadCategories() {
             onSnapshot(collection(db, "categories"), (snapshot) => {
-                categories = [];
-                snapshot.forEach(doc => categories.push({ id: doc.id, name: doc.data().name }));
-                const categorySelect = document.getElementById('product-category');
-                const currentValue = categorySelect.value;
+                categories = []; snapshot.forEach(doc => categories.push({ id: doc.id, name: doc.data().name }));
+                const categorySelect = document.getElementById('product-category'); const currentValue = categorySelect.value;
                 categorySelect.innerHTML = `<option value="" disabled selected>ক্যাটাগরি নির্বাচন করুন</option>`;
                 categories.forEach(cat => categorySelect.innerHTML += `<option value="${cat.name}">${cat.name}</option>`);
                 categorySelect.innerHTML += `<option value="new" class="text-primary font-bold bg-emerald-50">+ নতুন ক্যাটাগরি যোগ করুন</option>`;
@@ -1105,585 +1424,111 @@
             });
         }
 
-        // Login / Logout
-        document.getElementById('login-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            try {
-                await signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value);
-                window.showNotification("সফলভাবে লগইন করা হয়েছে!");
-            } catch (error) { document.getElementById('login-error').classList.remove('hidden'); }
-        });
-        
-        const logoutLogic = () => signOut(auth);
-        document.getElementById('logout-btn').addEventListener('click', logoutLogic);
-        document.getElementById('mobile-logout-btn').addEventListener('click', logoutLogic);
-        
-        // ================= ORDERS MANAGEMENT =================
-        window.toggleOrderTab = function(type) {
-            const pendingContainer = document.getElementById('orders-pending-container');
-            const completedContainer = document.getElementById('orders-completed-container');
-            const btnPending = document.getElementById('tab-btn-pending');
-            const btnCompleted = document.getElementById('tab-btn-completed');
-
-            if(type === 'pending') {
-                pendingContainer.classList.remove('hidden'); completedContainer.classList.add('hidden');
-                btnPending.className = "whitespace-nowrap flex-1 md:flex-none px-4 md:px-6 py-2 rounded-md text-sm font-bold bg-white text-primary shadow-sm transition-all";
-                btnCompleted.className = "whitespace-nowrap flex-1 md:flex-none px-4 md:px-6 py-2 rounded-md text-sm font-bold text-gray-500 hover:text-gray-700 transition-all";
-            } else {
-                pendingContainer.classList.add('hidden'); completedContainer.classList.remove('hidden');
-                btnCompleted.className = "whitespace-nowrap flex-1 md:flex-none px-4 md:px-6 py-2 rounded-md text-sm font-bold bg-white text-primary shadow-sm transition-all";
-                btnPending.className = "whitespace-nowrap flex-1 md:flex-none px-4 md:px-6 py-2 rounded-md text-sm font-bold text-gray-500 hover:text-gray-700 transition-all";
-            }
-        }
-
-        function loadOrdersData() {
-            onSnapshot(collection(db, "orders"), (snapshot) => {
-                document.getElementById('stat-orders-count').innerText = snapshot.docs.length;
-                const pendingTable = document.getElementById('orders-pending-table-body');
-                const completedTable = document.getElementById('orders-completed-table-body');
-                pendingTable.innerHTML = ''; completedTable.innerHTML = '';
-                let pendingCount = 0; let completedCount = 0;
-
-                snapshot.forEach(docSnap => {
-                    const data = docSnap.data(); const id = docSnap.id; const status = data.status || 'pending';
-                    let statusHtml = '';
-                    if(status === 'pending' || status === 'Pending') statusHtml = `<span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-bold">অপেক্ষমাণ</span>`;
-                    else if(status === 'confirmed') statusHtml = `<span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">কনফার্মড</span>`;
-                    else if(status === 'completed') statusHtml = `<span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold">সম্পূর্ণ</span>`;
-                    const dateShow = data.date || data.createdAt?.substring(0,10) || 'আজ';
-
-                    const rowHtml = `
-                        <tr class="mobile-card-row bg-white block md:table-row md:border-b border-gray-100 hover:bg-gray-50 transition-colors cursor-pointer md:rounded-none md:shadow-none" onclick="window.viewOrderFullDetail('${id}')">
-                            <td class="block md:table-cell p-3 md:p-4 border-b border-gray-50 md:border-none">
-                                <div class="flex justify-between md:block items-center">
-                                    <span class="font-mono font-bold text-gray-700 block">#${id.substring(0, 6).toUpperCase()}</span>
-                                    <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded md:bg-transparent md:p-0">${dateShow}</span>
-                                </div>
-                            </td>
-                            <td class="block md:table-cell p-3 md:p-4 border-b border-gray-50 md:border-none">
-                                <div class="flex justify-between md:block items-center">
-                                    <div class="text-sm font-bold text-gray-800">${data.customerName || 'বেনামী ক্রেতা'} <span class="text-xs text-gray-500 font-normal ml-1 md:block md:ml-0">${data.customerPhone || ''}</span></div>
-                                </div>
-                            </td>
-                            <td class="flex md:table-cell justify-between p-3 md:p-4 border-b border-gray-50 md:border-none items-center">
-                                <span class="md:hidden text-xs text-gray-500 font-bold">মোট বিল:</span>
-                                <span class="font-bold text-primary text-sm">৳ ${data.totalPrice || '০'}</span>
-                            </td>
-                            <td class="flex md:table-cell justify-between p-3 md:p-4 border-b border-gray-50 md:border-none items-center">
-                                <span class="md:hidden text-xs text-gray-500 font-bold">স্ট্যাটাস:</span>
-                                ${statusHtml}
-                            </td>
-                            <td class="block md:table-cell p-3 md:p-4 md:text-right text-center">
-                                <button onclick="event.stopPropagation(); window.viewOrderFullDetail('${id}')" class="text-blue-600 bg-blue-50 px-4 py-2 md:px-3 md:py-1 rounded text-xs font-bold hover:bg-blue-600 hover:text-white transition-colors mr-2">বিস্তারিত</button>
-                                <button onclick="event.stopPropagation(); window.deleteOrder('${id}')" class="text-red-500 bg-red-50 px-4 py-2 md:px-2 md:py-1 rounded text-xs font-bold hover:bg-red-500 hover:text-white transition-colors">মুছুন</button>
-                            </td>
-                        </tr>
-                    `;
-                    if(status === 'completed') { completedTable.innerHTML += rowHtml; completedCount++; } 
-                    else { pendingTable.innerHTML += rowHtml; pendingCount++; }
-                });
-
-                if(pendingCount === 0) pendingTable.innerHTML = `<tr class="block md:table-row"><td colspan="5" class="block md:table-cell p-6 text-center text-gray-400">কোনো অপেক্ষমাণ অর্ডার নেই।</td></tr>`;
-                if(completedCount === 0) completedTable.innerHTML = `<tr class="block md:table-row"><td colspan="5" class="block md:table-cell p-6 text-center text-gray-400">সম্পূর্ণ হওয়া বক্সে কোনো অর্ডার নেই।</td></tr>`;
-            });
-        }
-
-        window.viewOrderFullDetail = async function(orderId) {
-            currentViewOrderId = orderId;
-            try {
-                const snapshot = await getDocs(collection(db, "orders"));
-                const orderDoc = snapshot.docs.find(d => d.id === orderId);
-                if (orderDoc) {
-                    const data = orderDoc.data();
-                    document.getElementById('modal-order-id').innerText = `অর্ডার আইডি: #${orderId.toUpperCase()}`;
-                    document.getElementById('modal-customer-name').innerText = data.customerName || 'N/A';
-                    document.getElementById('modal-customer-phone').innerText = data.customerPhone || 'N/A';
-                    document.getElementById('modal-customer-address').innerText = data.address || 'N/A';
-                    const itemsTbody = document.getElementById('modal-order-items');
-                    itemsTbody.innerHTML = '';
-                    
-                    if (typeof data.items === 'string') {
-                        itemsTbody.innerHTML = `<tr><td colspan="2" class="p-3 font-medium text-gray-800">${data.items}</td><td class="p-3 text-right font-bold">৳ ${data.totalPrice}</td></tr>`;
-                    } else {
-                        const itemsList = data.itemList || [{name: 'পণ্য', qty: 1, price: data.totalPrice}];
-                        itemsList.forEach(item => {
-                            itemsTbody.innerHTML += `<tr><td class="p-3 font-medium text-gray-800">${item.name}</td><td class="p-3 text-center">${item.qty}x</td><td class="p-3 text-right font-bold">৳ ${item.qty * item.price}</td></tr>`;
-                        });
-                    }
-                    
-                    document.getElementById('modal-total-price').innerText = `৳ ${data.totalPrice || 0}`;
-                    const status = data.status || 'pending';
-                    const badge = document.getElementById('modal-status-badge');
-                    const btnConfirm = document.getElementById('btn-confirm-order');
-                    const btnComplete = document.getElementById('btn-complete-order');
-
-                    btnConfirm.classList.add('hidden'); btnComplete.classList.add('hidden');
-
-                    if(status === 'pending' || status === 'Pending') {
-                        badge.className = "px-4 py-2 text-sm md:text-base md:px-6 rounded-full font-bold border border-amber-200 bg-amber-50 text-amber-700";
-                        badge.innerText = "অপেক্ষমাণ (Pending)"; btnConfirm.classList.remove('hidden');
-                    } else if (status === 'confirmed') {
-                        badge.className = "px-4 py-2 text-sm md:text-base md:px-6 rounded-full font-bold border border-blue-200 bg-blue-50 text-blue-700";
-                        badge.innerText = "কনফার্মড (Confirmed)"; btnComplete.classList.remove('hidden');
-                    } else if (status === 'completed') {
-                        badge.className = "px-4 py-2 text-sm md:text-base md:px-6 rounded-full font-bold border border-emerald-200 bg-emerald-50 text-emerald-700";
-                        badge.innerText = "সম্পন্ন হয়েছে (Completed)";
-                    }
-                    window.openModal('view-order-modal');
-                }
-            } catch (error) { window.showNotification("সমস্যা হয়েছে।", true); }
-        }
-
-        window.confirmOrderAction = async function() {
-            if(!auth.currentUser) return window.showNotification("আপনাকে লগইন করতে হবে", true);
-            if(!currentViewOrderId) return;
-            await updateDoc(doc(db, "orders", currentViewOrderId), { status: 'confirmed' });
-            window.showNotification("অর্ডার কনফার্ম করা হয়েছে!"); window.viewOrderFullDetail(currentViewOrderId);
-        }
-
-        window.completeOrderAction = async function() {
-            if(!auth.currentUser) return window.showNotification("আপনাকে লগইন করতে হবে", true);
-            if(!currentViewOrderId) return;
-            await updateDoc(doc(db, "orders", currentViewOrderId), { status: 'completed' });
-            window.showNotification("অর্ডার সম্পূর্ণ বক্সে পাঠানো হলো।"); window.closeModal('view-order-modal'); window.toggleOrderTab('completed');
-        }
-
-        window.deleteOrder = async function(id) {
-            if(!auth.currentUser) return window.showNotification("আপনাকে লগইন করতে হবে", true);
-            if(confirm("অর্ডারটি মুছে ফেলতে চান?")) {
-                await deleteDoc(doc(db, "orders", id)); window.showNotification("মুছে ফেলা হয়েছে!");
-            }
-        }
-        window.printOrder = () => window.print();
-
-        window.generateMockOrder = async function() {
-            if(!auth.currentUser) return window.showNotification("আপনাকে লগইন করতে হবে", true);
-            await addDoc(collection(db, "orders"), {
-                customerName: "আব্দুর রহমান", customerPhone: "017" + Math.floor(10000000 + Math.random() * 90000000),
-                address: "ঢাকা", date: new Date().toLocaleDateString('bn-BD'), totalPrice: 1150, status: 'pending',
-                itemList: [{ name: "মধু ১ কেজি", qty: 1, price: 550 }, { name: "সরিষার তেল ২ লিটার", qty: 2, price: 300 }]
-            });
-            window.showNotification("ডেমো অর্ডার তৈরি হয়েছে!");
-        }
-
-        // ================= PRODUCT MANAGEMENT =================
         window.openAddProductModal = function() {
-            currentEditProductId = null; 
-            document.getElementById('add-product-form').reset();
+            currentEditProductId = null;
             document.getElementById('product-modal-title').innerText = "নতুন পণ্য আপলোড";
             document.getElementById('submit-product-btn').innerText = "আপলোড করুন";
+            document.getElementById('add-product-form').reset();
             window.openModal('add-product-modal');
         }
 
         window.editProduct = function(id) {
-            if(!auth.currentUser) return window.showNotification("আপনাকে লগইন করতে হবে", true);
-
             const product = allProductsList.find(p => p.id === id);
-            if (!product) return;
-
-            currentEditProductId = id; 
-            document.getElementById('product-image').value = product.imageUrl || '';
-            document.getElementById('product-name').value = product.name || '';
-            document.getElementById('product-category').value = product.category || '';
-            document.getElementById('product-regular-price').value = product.regularPrice || '';
-            document.getElementById('product-price').value = product.price || '';
-            document.getElementById('product-sku').value = product.sku || '';
-            document.getElementById('product-stock-status').value = product.stock || 'In Stock';
-            document.getElementById('product-description').value = product.description || '';
-            document.getElementById('product-category').dispatchEvent(new Event('change'));
-            document.getElementById('product-modal-title').innerText = "পণ্য আপডেট করুন";
-            document.getElementById('submit-product-btn').innerText = "আপডেট করুন";
-            window.openModal('add-product-modal');
-        }
-
-        function loadProductsData() {
-            onSnapshot(collection(db, "products"), (snapshot) => {
-                allProductsList = []; 
-                document.getElementById('total-products-count').innerText = snapshot.docs.length;
-                const tbody = document.getElementById('products-table-body'); tbody.innerHTML = '';
-                
-                snapshot.forEach((docSnap) => {
-                    const data = docSnap.data();
-                    allProductsList.push({ id: docSnap.id, ...data }); 
-
-                    const statusClass = data.stock === 'In Stock' ? 'text-emerald-600 bg-emerald-50 border-emerald-200' : 'text-red-600 bg-red-50 border-red-200';
-                    const statusText = data.stock === 'In Stock' ? 'স্টকে আছে' : 'স্টক শেষ';
-                    const imgUrl = data.imageUrl || `https://placehold.co/100x100/e2e8f0/64748b?text=P`;
-                    
-                    tbody.innerHTML += `
-                        <tr class="mobile-card-row bg-white block md:table-row md:border-b border-gray-100 hover:bg-gray-50 transition-colors md:rounded-none md:shadow-none">
-                            <td class="flex md:table-cell items-center gap-3 p-3 md:p-4 border-b border-gray-50 md:border-none">
-                                <img src="${imgUrl}" onerror="this.src='https://placehold.co/100x100/e2e8f0/64748b?text=P'" alt="Product" class="w-12 h-12 rounded-lg object-cover border border-gray-200 flex-shrink-0">
-                                <div>
-                                    <div class="font-bold text-gray-800">${data.name || 'নাম নেই'}</div>
-                                    <div class="text-xs text-gray-400 mt-1 line-clamp-1">${data.description || ''}</div>
-                                </div>
-                            </td>
-                            <td class="flex md:table-cell justify-between items-center p-3 md:p-4 border-b border-gray-50 md:border-none">
-                                <span class="md:hidden text-xs text-gray-500 font-bold">ক্যাটাগরি:</span>
-                                <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs font-medium">${data.category || 'জেনারেল'}</span>
-                            </td>
-                            <td class="flex md:table-cell justify-between items-center p-3 md:p-4 border-b border-gray-50 md:border-none">
-                                <span class="md:hidden text-xs text-gray-500 font-bold">মূল্য:</span>
-                                <div class="font-bold text-primary">৳ ${data.price || '0'}</div>
-                            </td>
-                            <td class="flex md:table-cell justify-between items-center p-3 md:p-4 border-b border-gray-50 md:border-none md:text-center">
-                                <span class="md:hidden text-xs text-gray-500 font-bold">স্টক:</span>
-                                <div>
-                                    <span class="px-2 py-1 rounded-full text-[10px] font-bold border ${statusClass}">${statusText}</span>
-                                    <div class="text-[10px] text-gray-400 mt-1 font-mono hidden md:block">SKU: ${data.sku || 'N/A'}</div>
-                                </div>
-                            </td>
-                            <td class="flex md:table-cell justify-end p-3 md:p-4 md:text-right">
-                                <div class="flex items-center gap-2 justify-end">
-                                    <button onclick="window.editProduct('${docSnap.id}')" class="text-blue-600 hover:bg-blue-50 p-2 md:px-3 md:py-1 rounded-lg transition-colors border border-gray-100 md:border-none flex items-center gap-1 text-xs font-bold md:text-sm">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                                        <span class="md:hidden">ইডিট</span>
-                                    </button>
-                                    <button onclick="window.deleteProduct('${docSnap.id}')" class="text-red-500 hover:bg-red-50 p-2 md:px-3 md:py-1 rounded-lg transition-colors border border-gray-100 md:border-none flex items-center gap-1 text-xs font-bold md:text-sm">
-                                        <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                        <span class="md:hidden">মুছুন</span>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    `;
-                });
-                if(snapshot.empty) tbody.innerHTML = `<tr class="block md:table-row"><td colspan="5" class="block md:table-cell p-6 text-center text-gray-400">কোনো পণ্য পাওয়া যায়নি</td></tr>`;
-
-                // Update Public Storefront
-                renderPublicProducts();
-            });
+            if(product) {
+                currentEditProductId = id;
+                document.getElementById('product-modal-title').innerText = "পণ্য আপডেট করুন";
+                document.getElementById('submit-product-btn').innerText = "আপডেট করুন";
+                document.getElementById('product-image').value = product.imageUrl || '';
+                document.getElementById('product-name').value = product.name || '';
+                document.getElementById('product-category').value = product.category || '';
+                document.getElementById('product-regular-price').value = product.regularPrice || '';
+                document.getElementById('product-price').value = product.price || '';
+                document.getElementById('product-sku').value = product.sku || '';
+                document.getElementById('product-stock-status').value = product.stockStatus || 'In Stock';
+                document.getElementById('product-description').value = product.description || '';
+                window.openModal('add-product-modal');
+            }
         }
 
         document.getElementById('add-product-form').addEventListener('submit', async (e) => {
-            e.preventDefault(); 
-            if(!auth.currentUser) return window.showNotification("আপনাকে লগইন করতে হবে", true);
-
-            document.getElementById('submit-product-btn').innerText = 'অপেক্ষা করুন...';
-
+            e.preventDefault();
             const productData = {
-                name: document.getElementById('product-name').value, 
+                imageUrl: document.getElementById('product-image').value,
+                name: document.getElementById('product-name').value,
                 category: document.getElementById('product-category').value,
-                regularPrice: document.getElementById('product-regular-price').value || null, 
+                regularPrice: document.getElementById('product-regular-price').value,
                 price: document.getElementById('product-price').value,
-                sku: document.getElementById('product-sku').value || '', 
-                stock: document.getElementById('product-stock-status').value,
-                description: document.getElementById('product-description').value, 
-                imageUrl: document.getElementById('product-image').value || ''
+                sku: document.getElementById('product-sku').value,
+                stockStatus: document.getElementById('product-stock-status').value,
+                description: document.getElementById('product-description').value,
+                updatedAt: new Date().toISOString()
             };
-
             try {
-                if(currentEditProductId) {
-                    await updateDoc(doc(db, "products", currentEditProductId), productData);
-                    window.showNotification("পণ্য আপডেট করা হয়েছে!");
-                } else {
-                    productData.timestamp = new Date();
-                    await addDoc(collection(db, "products"), productData);
-                    window.showNotification("সফলভাবে যোগ করা হয়েছে!");
-                }
-                
-                window.closeModal('add-product-modal'); 
-                document.getElementById('add-product-form').reset(); 
-                currentEditProductId = null;
-
-            } catch (error) { window.showNotification("সমস্যা হয়েছে।", true); }
-            
-            document.getElementById('submit-product-btn').innerText = currentEditProductId ? 'আপডেট করুন' : 'আপলোড করুন';
+                if(currentEditProductId) { await updateDoc(doc(db, "products", currentEditProductId), productData); window.showNotification("পণ্য সফলভাবে আপডেট হয়েছে!"); } 
+                else { productData.createdAt = new Date().toISOString(); await addDoc(collection(db, "products"), productData); window.showNotification("নতুন পণ্য যোগ করা হয়েছে!"); }
+                window.closeModal('add-product-modal');
+            } catch(err) { window.showNotification("সংরক্ষণ করতে সমস্যা হয়েছে", true); }
         });
 
-        window.deleteProduct = async function(id) { 
-            if(!auth.currentUser) return window.showNotification("আপনাকে লগইন করতে হবে", true);
-            if(confirm("পণ্যটি মুছে ফেলতে চান?")) await deleteDoc(doc(db, "products", id)); 
+        window.deleteProduct = function(id) {
+            window.confirmAction("পণ্য মুছুন", "আপনি কি নিশ্চিত যে এই পণ্যটি মুছে ফেলতে চান?", async () => {
+                await deleteDoc(doc(db, "products", id)); window.showNotification("পণ্য মুছে ফেলা হয়েছে!");
+            });
         }
-
-        // ================= CUSTOMERS MANAGEMENT =================
-        function loadCustomersData() {
-            onSnapshot(collection(db, "customers"), (snapshot) => {
-                document.getElementById('stat-customers-count').innerText = snapshot.docs.length;
-                const tbody = document.getElementById('customers-table-body'); tbody.innerHTML = '';
-                snapshot.forEach((docSnap) => {
-                    const data = docSnap.data();
-                    tbody.innerHTML += `
-                        <tr class="mobile-card-row bg-white block md:table-row md:border-b border-gray-100 hover:bg-gray-50 transition-colors md:rounded-none md:shadow-none">
-                            <td class="flex md:table-cell justify-between items-center p-3 md:p-4 border-b border-gray-50 md:border-none font-medium text-gray-800">
-                                <span class="md:hidden text-xs text-gray-500 font-bold">নাম:</span> ${data.name || 'নাম নেই'}
-                            </td>
-                            <td class="flex md:table-cell justify-between items-center p-3 md:p-4 border-b border-gray-50 md:border-none text-gray-600">
-                                <span class="md:hidden text-xs text-gray-500 font-bold">মোবাইল:</span> ${data.phone || 'নেই'}
-                            </td>
-                            <td class="flex md:table-cell justify-between items-center p-3 md:p-4 border-b border-gray-50 md:border-none text-gray-500 text-sm">
-                                <span class="md:hidden text-xs text-gray-500 font-bold">ঠিকানা:</span> <span class="text-right md:text-left truncate w-48 md:w-auto">${data.address || 'নেই'}</span>
-                            </td>
-                            <td class="flex md:table-cell justify-end p-3 md:p-4 md:text-right">
-                                <button onclick="window.deleteCustomer('${docSnap.id}')" class="text-red-500 bg-red-50 px-4 py-2 md:px-2 md:py-1 rounded text-xs font-bold hover:bg-red-500 hover:text-white transition-colors">মুছুন</button>
-                            </td>
-                        </tr>
-                    `;
-                });
+        window.deleteCustomer = function(id) {
+            window.confirmAction("গ্রাহক মুছুন", "গ্রাহকের তথ্য মুছে ফেলতে চান?", async () => {
+                await deleteDoc(doc(db, "customers", id)); window.showNotification("গ্রাহক মুছে ফেলা হয়েছে!");
             });
         }
 
+        // Demo Data Generators updated for new schema
+        window.generateMockOrder = async function() {
+            if(!auth.currentUser) return;
+            const mockData = {
+                customerName: "ডেমো গ্রাহক " + Math.floor(Math.random() * 100),
+                customerPhone: "01700" + Math.floor(100000 + Math.random() * 900000),
+                customerAddress: "মিরপুর ১০, ঢাকা",
+                totalPrice: Math.floor(500 + Math.random() * 5000),
+                status: "new",
+                createdAt: new Date().toISOString(),
+                newAt: new Date().toISOString(),
+                statusUpdatedAt: new Date().toISOString(),
+                items: [{ name: "Naisargik Honey", quantity: 2, price: 500 }]
+            };
+            await addDoc(collection(db, "orders"), mockData);
+            window.showNotification("নতুন ডেমো অর্ডার তৈরি হয়েছে!");
+        }
+
         window.generateMockCustomer = async function() {
-            if(!auth.currentUser) return window.showNotification("আপনাকে লগইন করতে হবে", true);
-            await addDoc(collection(db, "customers"), { name: "রাকিবুল ইসলাম", phone: "018" + Math.floor(10000000 + Math.random() * 90000000), address: "বনানী, ঢাকা", joinDate: new Date() });
-        }
-        
-        window.deleteCustomer = async function(id) { 
-            if(!auth.currentUser) return window.showNotification("আপনাকে লগইন করতে হবে", true);
-            if(confirm("এই গ্রাহককে মুছে ফেলতে চান?")) await deleteDoc(doc(db, "customers", id)); 
-        }
-
-        // ================= PUBLIC STOREFRONT FUNCTIONS =================
-        function renderPublicProducts() {
-            const container = document.getElementById('public-products-container');
-            if (!container) return;
-
-            if (allProductsList.length === 0) {
-                container.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 font-medium">কোনো পণ্য পাওয়া যায়নি।</div>`;
-                return;
-            }
-
-            container.innerHTML = allProductsList.map(product => {
-                const imgUrl = product.imageUrl || "https://images.unsplash.com/photo-1587049352847-4d4b1a41bb98?q=80&w=800";
-                
-                return `
-                    <div class="product-card bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-emerald-50 overflow-hidden flex flex-col">
-                        <div class="relative h-40 md:h-56 overflow-hidden bg-gray-100 cursor-pointer">
-                            <img src="${imgUrl}" alt="${product.name}" class="product-img w-full h-full object-cover transition-transform duration-500" onerror="this.src='https://placehold.co/400x400/e2e8f0/64748b?text=Product'">
-                        </div>
-                        <div class="p-3 md:p-5 flex-1 flex flex-col">
-                            <div class="text-[10px] md:text-xs text-primary font-semibold mb-1">${product.category || 'সাধারণ'}</div>
-                            <h3 class="text-sm md:text-xl font-bold text-gray-800 mb-2 leading-tight">${product.name}</h3>
-                            
-                            <div class="mt-auto">
-                                <div class="flex justify-between items-center mb-3">
-                                    <span class="text-lg md:text-2xl font-bold text-primary">৳ ${product.price}</span>
-                                    ${product.regularPrice ? `<span class="text-xs md:text-sm text-gray-400 line-through">৳ ${product.regularPrice}</span>` : ''}
-                                </div>
-                                <button onclick="window.addProductToCart('${product.id}')" class="w-full bg-emerald-100 hover:bg-primary text-primary hover:text-white font-bold py-2 md:py-2.5 rounded-xl transition-colors text-xs md:text-base flex justify-center items-center gap-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                                    <span class="hidden md:inline">কার্টে যোগ করুন</span>
-                                    <span class="md:hidden">অর্ডার করুন</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+            if(!auth.currentUser) return;
+            const mockData = {
+                name: "ডেমো গ্রাহক " + Math.floor(Math.random() * 100),
+                phone: "01700" + Math.floor(100000 + Math.random() * 900000),
+                address: "মিরপুর ১০, ঢাকা"
+            };
+            await addDoc(collection(db, "customers"), mockData);
+            window.showNotification("নতুন ডেমো গ্রাহক তৈরি হয়েছে!");
         }
 
-        window.addProductToCart = (productId) => {
-            const product = allProductsList.find(p => p.id === productId);
-            if (!product) return;
+        /* ======================== Auth Listeners ======================== */
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const loginBtn = document.getElementById('login-btn'); const loginSpinner = document.getElementById('login-spinner');
+            const loginText = document.getElementById('login-text'); const loginError = document.getElementById('login-error');
 
-            const cartItemId = `${product.id}-default`;
-            const existing = cart.find(item => item.cartItemId === cartItemId);
-            if (existing) {
-                existing.quantity++;
-            } else {
-                cart.push({
-                    productId: product.id,
-                    cartItemId: cartItemId,
-                    name: product.name,
-                    image: product.imageUrl,
-                    weight: "১ পিস/প্যাকেট",
-                    price: product.price,
-                    quantity: 1
-                });
-            }
-
-            updateCartUI();
-            window.showNotification("কার্টে যোগ করা হয়েছে!");
-        };
-
-        window.updateQty = (cartItemId, delta) => {
-            const idx = cart.findIndex(item => item.cartItemId === cartItemId);
-            if (idx > -1) {
-                cart[idx].quantity += delta;
-                if (cart[idx].quantity <= 0) {
-                    cart.splice(idx, 1);
-                }
-                updateCartUI();
-            }
-        };
-
-        window.removeCartItem = (cartItemId) => {
-            cart = cart.filter(item => item.cartItemId !== cartItemId);
-            updateCartUI();
-        };
-
-        function updateCartUI() {
-            const cartCountBadge = document.getElementById('cart-count');
-            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-            cartCountBadge.innerText = totalCount;
-
-            cartCountBadge.classList.add('scale-150');
-            setTimeout(() => cartCountBadge.classList.remove('scale-150'), 200);
-
-            const container = document.getElementById('cart-content-area');
-            let total = 0;
-
-            if (cart.length === 0) {
-                container.innerHTML = `<div class="text-center text-gray-500 py-12 flex flex-col items-center"><svg class="w-16 h-16 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg><p>আপনার কার্ট বর্তমানে খালি আছে।</p></div>`;
-                document.getElementById('cart-total').innerText = `৳ ০`;
-                return;
-            }
-
-            container.innerHTML = cart.map(item => {
-                const sub = item.price * item.quantity;
-                total += sub;
-                return `
-                    <div class="flex gap-3 md:gap-4 items-center bg-white p-3 rounded-xl border border-gray-100 shadow-sm relative group">
-                        <img src="${item.image || 'https://images.unsplash.com/photo-1587049352847-4d4b1a41bb98?q=80&w=80'}" class="w-12 h-12 md:w-16 md:h-16 object-cover rounded-lg border" onerror="this.src='https://placehold.co/100x100/e2e8f0/64748b?text=P'">
-                        <div class="flex-1">
-                            <h4 class="font-bold text-gray-800 text-xs md:text-sm leading-tight">${item.name}</h4>
-                            <div class="text-secondary font-bold text-xs md:text-sm mt-1">৳ ${item.price}</div>
-                        </div>
-                        <div class="flex items-center gap-1 bg-gray-50 rounded-lg p-1 border">
-                            <button onclick="window.updateQty('${item.cartItemId}', -1)" class="w-6 h-6 flex items-center justify-center text-gray-600 hover:bg-gray-200 rounded font-bold transition">-</button>
-                            <span class="text-xs font-bold w-4 text-center">${item.quantity}</span>
-                            <button onclick="window.updateQty('${item.cartItemId}', 1)" class="w-6 h-6 flex items-center justify-center text-gray-600 hover:bg-gray-200 rounded font-bold transition">+</button>
-                        </div>
-                        <button onclick="window.removeCartItem('${item.cartItemId}')" class="absolute top-1 right-1 text-gray-300 hover:text-red-500 transition-colors p-1">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                        </button>
-                    </div>
-                `;
-            }).join('');
-
-            document.getElementById('cart-total').innerText = `৳ ${total}`;
-        }
-
-        window.proceedToCheckout = () => {
-            if (cart.length === 0) {
-                window.showNotification("অর্ডার করতে প্রথমে পণ্য যোগ করুন।", true);
-                return;
-            }
-            document.getElementById('cart-content-area').classList.add('hidden');
-            document.getElementById('checkout-form-area').classList.remove('hidden');
-
-            document.getElementById('cart-action-buttons').classList.add('hidden');
-            document.getElementById('checkout-action-buttons').classList.remove('hidden');
-        };
-
-        window.backToCartItems = () => {
-            document.getElementById('cart-content-area').classList.remove('hidden');
-            document.getElementById('checkout-form-area').classList.add('hidden');
-
-            document.getElementById('cart-action-buttons').classList.remove('hidden');
-            document.getElementById('checkout-action-buttons').classList.add('hidden');
-        };
-
-        window.submitOrder = async () => {
-            const name = document.getElementById('cust-name').value.trim();
-            const phone = document.getElementById('cust-phone').value.trim();
-            const address = document.getElementById('cust-address').value.trim();
-
-            if (!name || !phone || !address) {
-                window.showNotification("অনুগ্রহ করে সব তথ্য সঠিক উপায়ে পূরণ করুন।", true);
-                return;
-            }
-
-            const submitBtn = document.getElementById('order-submit-btn');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = `অপেক্ষা করুন...`;
-
-            const itemsString = cart.map(item => `${item.name} x ${item.quantity}`).join(', ');
-            const totalVal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
+            loginBtn.disabled = true; loginSpinner.classList.remove('hidden'); loginText.innerText = "অপেক্ষা করুন..."; loginError.classList.add('hidden');
             try {
-                await addDoc(collection(db, "orders"), {
-                    customerName: name,
-                    customerPhone: phone,
-                    items: itemsString,
-                    totalPrice: totalVal,
-                    address: address,
-                    createdAt: new Date().toISOString(),
-                    status: "Pending"
-                });
-
-                cart = [];
-                updateCartUI();
-                window.backToCartItems();
-                window.closeCart();
-                document.getElementById('cust-name').value = '';
-                document.getElementById('cust-phone').value = '';
-                document.getElementById('cust-address').value = '';
-                
-                const modalOverlay = document.getElementById('public-alert-modal-overlay');
-                const modalContainer = document.getElementById('public-alert-modal');
-                const modalBody = document.getElementById('public-alert-body');
-                
-                modalBody.innerHTML = `
-                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-green-500">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                    </div>
-                    <h2 class="text-2xl font-bold text-gray-900 mb-2">ধন্যবাদ!</h2>
-                    <p class="text-gray-600 mb-6 text-sm">আপনার অর্ডারটি সফলভাবে আমাদের কাছে পৌঁছেছে। আমাদের প্রতিনিধি শীঘ্রই আপনার সাথে যোগাযোগ করবে।</p>
-                    <button onclick="window.closeAlertModal()" class="w-full bg-primary text-white font-bold py-3 rounded-full hover:bg-emerald-800 transition-colors">বন্ধ করুন</button>
-                `;
-                
-                modalOverlay.classList.remove('hidden');
-                modalContainer.classList.remove('hidden');
-                setTimeout(() => {
-                    modalOverlay.classList.remove('opacity-0');
-                    modalOverlay.classList.add('opacity-100');
-                    document.getElementById('public-alert-modal-content').classList.remove('scale-95');
-                    document.getElementById('public-alert-modal-content').classList.add('scale-100');
-                }, 10);
-
-            } catch (err) {
-                window.showNotification("দুঃখিত, সংযোগ সমস্যার কারণে অর্ডার সম্পন্ন করা যায়নি।", true);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerText = "অর্ডার সম্পন্ন করুন (ক্যাশ অন ডেলিভারি)";
+                await signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value);
+                window.showNotification("সফলভাবে লগইন করা হয়েছে!");
+                loginBtn.disabled = false; loginSpinner.classList.add('hidden'); loginText.innerText = "লগইন করুন";
+            } catch (error) { 
+                loginError.classList.remove('hidden'); 
+                loginBtn.disabled = false; loginSpinner.classList.add('hidden'); loginText.innerText = "লগইন করুন";
             }
-        };
-
-        window.openCart = () => {
-            const drawer = document.getElementById('cart-drawer');
-            const overlay = document.getElementById('cart-drawer-overlay');
-            
-            overlay.classList.remove('hidden');
-            drawer.classList.remove('hidden');
-            
-            setTimeout(() => {
-                overlay.classList.remove('opacity-0');
-                overlay.classList.add('opacity-100');
-                drawer.classList.remove('translate-x-full');
-            }, 50);
-        };
-
-        window.closeCart = () => {
-            const drawer = document.getElementById('cart-drawer');
-            const overlay = document.getElementById('cart-drawer-overlay');
-
-            overlay.classList.remove('opacity-100');
-            overlay.classList.add('opacity-0');
-            drawer.classList.add('translate-x-full');
-
-            setTimeout(() => {
-                overlay.classList.add('hidden');
-                drawer.classList.add('hidden');
-            }, 300);
-        };
-
-        window.closeAlertModal = () => {
-            const modalOverlay = document.getElementById('public-alert-modal-overlay');
-            const modalContainer = document.getElementById('public-alert-modal');
-            const modalBox = document.getElementById('public-alert-modal-content');
-
-            modalOverlay.classList.remove('opacity-100');
-            modalOverlay.classList.add('opacity-0');
-            modalBox.classList.remove('scale-100');
-            modalBox.classList.add('scale-95');
-
-            setTimeout(() => {
-                modalOverlay.classList.add('hidden');
-                modalContainer.classList.add('hidden');
-            }, 300);
-        };
+        });
+        const logoutLogic = () => signOut(auth);
+        document.getElementById('logout-btn').addEventListener('click', logoutLogic);
+        document.getElementById('mobile-logout-btn').addEventListener('click', logoutLogic);
 
     </script>
 </body>
